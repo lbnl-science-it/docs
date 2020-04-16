@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
+     <loc>https://lbnl-science-it.github.io/docs/</loc>
+     <lastmod>2020-04-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lbnl-science-it.github.io/docs/consult/</loc>
+     <lastmod>2020-04-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lbnl-science-it.github.io/docs/hpc/</loc>
+     <lastmod>2020-04-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lbnl-science-it.github.io/docs/data/</loc>
+     <lastmod>2020-04-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lbnl-science-it.github.io/docs/support/</loc>
+     <lastmod>2020-04-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+</urlset>
