@@ -23,5 +23,9 @@
      <loc>https://lbnl-science-it.github.io/docs/sparc_on_laurencium/</loc>
      <lastmod>2020-05-03</lastmod>
      <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://lbnl-science-it.github.io/docs/sparc_on_gcp/</loc>
+     <lastmod>2020-05-03</lastmod>
+     <changefreq>daily</changefreq>
     </url>
 </urlset>
