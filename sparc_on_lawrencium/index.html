@@ -11,7 +11,7 @@
         <meta name="description" content="concierge information technology services for science">
       
       
-        <link rel="canonical" href="https://lbnl-science-it.github.io/docs/sparc_on_laurencium/">
+        <link rel="canonical" href="https://lbnl-science-it.github.io/docs/sparc_on_lawrencium/">
       
       
         <meta name="author" content="Shawfeng Dong">
@@ -21,7 +21,7 @@
     
     
       
-        <title>SpaRC on Laurencium - LBNL Science IT Docs</title>
+        <title>SpaRC on Lawrencium - LBNL Science IT Docs</title>
       
     
     
@@ -54,7 +54,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-sparc-on-laurencium" class="md-skip">
+        <a href="#running-sparc-on-lawrencium" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              SpaRC on Laurencium
+              SpaRC on Lawrencium
             
           </span>
         </div>
@@ -278,14 +278,14 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        SpaRC on Laurencium
+        SpaRC on Lawrencium
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
         </span>
       </label>
     
-    <a href="./" title="SpaRC on Laurencium" class="md-nav__link md-nav__link--active">
-      SpaRC on Laurencium
+    <a href="./" title="SpaRC on Lawrencium" class="md-nav__link md-nav__link--active">
+      SpaRC on Lawrencium
     </a>
     
       
@@ -304,8 +304,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#spark-on-demand-on-laurencium" class="md-nav__link">
-    Spark On Demand on Laurencium
+  <a href="#spark-on-demand-on-lawrencium" class="md-nav__link">
+    Spark On Demand on Lawrencium
   </a>
   
 </li>
@@ -334,6 +334,13 @@
         <li class="md-nav__item">
   <a href="#known-issues-and-future-improvements" class="md-nav__link">
     Known issues and future improvements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
   </a>
   
 </li>
@@ -388,8 +395,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#spark-on-demand-on-laurencium" class="md-nav__link">
-    Spark On Demand on Laurencium
+  <a href="#spark-on-demand-on-lawrencium" class="md-nav__link">
+    Spark On Demand on Lawrencium
   </a>
   
 </li>
@@ -422,6 +429,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -434,7 +448,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/lbnl-science-it/docs-source/blob/master/docs/sparc_on_laurencium.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/lbnl-science-it/docs-source/blob/master/docs/sparc_on_lawrencium.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
                   </a>
                 
@@ -442,14 +456,14 @@
                   
                 
                 
-                <h1 id="running-sparc-on-laurencium">Running SpaRC on Laurencium</h1>
-<p>SpaRC is an <a href="https://www.biorxiv.org/content/10.1101/246496v1">Apache Spark-based scalable sequence clustering application</a>. SpaRC has been running successfully on <a href="https://aws.amazon.com/emr/">AWS EMR</a>, as well as on the <a href="https://www.psc.edu/bridges">Bridges</a> supercomputer at PSC. In this tutorial, I describe how to run SpaRC on <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium">Laurencium</a>.</p>
-<h2 id="spark-on-demand-on-laurencium">Spark On Demand on Laurencium</h2>
-<p>Users can run Spark jobs on Laurencium in <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/faq">Spark On Demand (SOD)</a> fashion, in which a standalone Spark cluster will be created <em>on demand</em> in a Slurm job. Note that the Spark cluster will be running in <a href="https://spark.apache.org/docs/latest/spark-standalone.html">standalone mode</a>, so there will be no YARN cluster manager, nor HDFS. In lieu of HDFS, we'll use Lustre scratch for storage.</p>
-<p>As of this writing, there is only Spark <strong>2.1.0</strong> available on Laurencium. We may install a more up-to-date version in the near future.</p>
+                <h1 id="running-sparc-on-lawrencium">Running SpaRC on Lawrencium</h1>
+<p>SpaRC is an <a href="#references">Apache Spark-based scalable genomic sequence clustering application</a>. SpaRC has been running successfully on <a href="https://aws.amazon.com/emr/">AWS EMR</a>, as well as on the <a href="https://www.psc.edu/bridges">Bridges</a> supercomputer at PSC. In this tutorial, I describe how to run SpaRC on <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium">Lawrencium</a>.</p>
+<h2 id="spark-on-demand-on-lawrencium">Spark On Demand on Lawrencium</h2>
+<p>Users can run Spark jobs on Lawrencium in <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/faq">Spark On Demand (SOD)</a> fashion, in which a standalone Spark cluster will be created <em>on demand</em> in a Slurm job. Note that the Spark cluster will be running in <a href="https://spark.apache.org/docs/latest/spark-standalone.html">standalone mode</a>, so there will be no YARN cluster manager, nor HDFS. In lieu of HDFS, we'll use Lustre scratch for storage.</p>
+<p>As of this writing, there is only Spark <strong>2.1.0</strong> available on Lawrencium. We may install a more up-to-date version in the near future.</p>
 <h2 id="building-sparc">Building SpaRC</h2>
 <p>You'll build SpaRC against Spark 2.1.0. The source code of SpaRC is hosted on Bitbucket at <a href="https://bitbucket.org/LizhenShi/sparc">https://bitbucket.org/LizhenShi/sparc</a>. I don't have write access to the repo, so I imported it to GitHub, at <a href="https://github.com/shawfdong/sparc">https://github.com/shawfdong/sparc</a>. I've added a new file <code>build.sbt.spark2.1.0</code> to the GitHub repo, which, as the name suggests, will be used to build SpaRC against Spark 2.1.0.</p>
-<p>Note that you can't build SpaRC on the login nodes of Laurencium, because rsync (which is required by sbt) is disabled there. You'll have to use the data transfer node <code>lrc-xfer.lbl.gov</code>:</p>
+<p>Note that you can't build SpaRC on the login nodes of Lawrencium, because rsync (which is required by sbt) is disabled there. You'll have to use the data transfer node <code>lrc-xfer.lbl.gov</code>:</p>
 <pre><code class="shell">$ ssh lrc-xfer.lbl.gov
 </code></pre>
 
@@ -490,9 +504,9 @@ $ head -2 sample.seq
 </code></pre>
 
 <p>Now you can exit from <code>lrc-xfer.lbl.gov</code>.</p>
-<p><em>Alternatively</em>, you could build SpaRC on your local computer, then upload the assembled fat jar file to your Lustre scratch space on Laurencium.</p>
+<p><em>Alternatively</em>, you could build SpaRC on your local computer, then upload the assembled fat jar file to your Lustre scratch space on Lawrencium.</p>
 <h2 id="running-sparc-interactively">Running SpaRC interactively</h2>
-<p>SSH to a Laurencium login node:</p>
+<p>SSH to a Lawrencium login node:</p>
 <pre><code class="shell">$ ssh lrc-login.lbl.gov
 </code></pre>
 
@@ -636,6 +650,11 @@ spark-stop
 <ol>
 <li>Presumably, there is a switch <code>-i</code> to <code>spark-start</code> that would enable communications over the IPoIB network. But it doesn't work!</li>
 <li>Spark 2.1.0 is a bit old.</li>
+</ol>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://academic.oup.com/bioinformatics/article/35/5/760/5078476">https://academic.oup.com/bioinformatics/article/35/5/760/5078476</a></li>
+<li><a href="https://peerj.com/articles/8966/">https://peerj.com/articles/8966/</a></li>
 </ol>
                 
               
