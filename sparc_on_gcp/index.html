@@ -289,9 +289,63 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        SpaRC on GCP
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
     <a href="./" title="SpaRC on GCP" class="md-nav__link md-nav__link--active">
       SpaRC on GCP
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-sparc" class="md-nav__link">
+    Building SpaRC:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload-data-to-google-cloud-storage" class="md-nav__link">
+    Upload Data to Google Cloud Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-dataproc" class="md-nav__link">
+    Launch Dataproc
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-sparc-job-on-dataproc" class="md-nav__link">
+    Run SpaRC job on Dataproc
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -318,6 +372,44 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-sparc" class="md-nav__link">
+    Building SpaRC:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload-data-to-google-cloud-storage" class="md-nav__link">
+    Upload Data to Google Cloud Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-dataproc" class="md-nav__link">
+    Launch Dataproc
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-sparc-job-on-dataproc" class="md-nav__link">
+    Run SpaRC job on Dataproc
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -337,6 +429,77 @@
                 
                 
                 <h1 id="running-sparc-on-google-cloud-dataproc">Running SpaRC on Google Cloud Dataproc</h1>
+<h3 id="building-sparc">Building SpaRC:</h3>
+<p>Open a new <strong>Cloud Shell</strong> and run:</p>
+<pre><code class="shell">git clone https://github.com/shawfdong/sparc.git
+cd sparc
+wget https://piccolo.link/sbt-1.3.10.tgz
+tar xvz sbt-1.3.10.tgz
+./sbt/bin/sbt assembly
+</code></pre>
+
+<p>A jar file should be created at: <code>target/scala-2.11/LocalCluster-assembly-0.2.jar</code></p>
+<h3 id="upload-data-to-google-cloud-storage">Upload Data to Google Cloud Storage</h3>
+<ol>
+<li>
+<p>Navigate to <strong>Storage</strong> and select <strong>Storage &gt; Browser</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create Bucket</strong>.
+`</p>
+</li>
+<li>
+<p>Specify <strong>your project name</strong> as the <strong>bucket name</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Copy the compiled SpaRC <code>LocalCluster-assembly-0.2.jar</code> and a sample input file <code>sample_small.seq</code> to the project bucket you just created, by running the below in Cloud Shell:</p>
+</li>
+</ol>
+<pre><code class="shell">gsutil cp target/scala-2.11/LocalCluster-assembly-0.2.jar gs://$DEVSHELL_PROJECT_ID
+cd data/small
+cp sample.seq sample_small.seq
+gsutil cp sample_small.seq gs://$DEVSHELL_PROJECT_ID
+</code></pre>
+
+<h3 id="launch-dataproc"><a href="https://cloud.google.com/dataproc">Launch Dataproc</a></h3>
+<h3 id="run-sparc-job-on-dataproc">Run SpaRC job on Dataproc</h3>
+<ol>
+<li>
+<p>In the <strong>Dataproc</strong> console, click <strong>Jobs</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Submit job</strong>.</p>
+</li>
+<li>
+<p>For <strong>Job type</strong>, select <strong>Spark</strong> and for <strong>Main class or jar</strong> and <strong>Jar files</strong>, specify the location of the SpaRC jar file you uploaded to your bucket. Your <strong>bucket-name</strong> is <strong>your project name</strong>: <code>gs://&lt;bucket-name&gt;/LocalCluster-assembly-0.2.jar</code>. </p>
+</li>
+</ol>
+<p>For <strong>Arguments</strong>, enter each of these arguments separately:
+   <code>json
+       "args": [
+                "KmerCounting",
+                "--input",
+                "gs://&lt;my-project-ID&gt;/sample_small.seq",
+                "--output",
+                "tset.log",
+                "--kmer_length",
+                "31"
+         ]</code></p>
+<p>For <strong>Properties</strong>, enter these Key-Value pairs separately: 
+    <code>json
+    "properties": {
+      "spark.executor.extraClassPath": "gs://&lt;my-project-ID&gt;/LocalCluster-assembly-0.2.jar",
+      "spark.driver.maxResultSize": "8g",
+      "spark.network.timeout": "360000",
+      "spark.default.parallelism": "4",
+      "spark.eventLog.enabled": "false"
+    }</code></p>
+<ol>
+<li>Click <strong>Submit</strong></li>
+</ol>
                 
               
               
