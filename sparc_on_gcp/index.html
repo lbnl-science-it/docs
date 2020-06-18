@@ -17,7 +17,7 @@
         <meta name="author" content="Shawfeng Dong">
       
       <link rel="shortcut icon" href="../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.0">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.df84b5fe.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
       
       
     
@@ -48,6 +48,7 @@
   
     <body dir="ltr">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -274,33 +275,21 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../jeff/" title="Jeff's page" class="md-nav__link">
-      Jeff's page
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-9">
       Tutorials
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-9">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
         </span>
@@ -491,8 +480,7 @@ tar xvzf sbt-1.3.10.tgz
 <p>Navigate to <strong>Storage</strong> and select <strong>Storage &gt; Browser</strong>.</p>
 </li>
 <li>
-<p>Click <strong>Create Bucket</strong>.
-`</p>
+<p>Click <strong>Create Bucket</strong>.</p>
 </li>
 <li>
 <p>Specify <strong>your project name</strong> as the <strong>bucket name</strong>.</p>
@@ -524,26 +512,27 @@ gsutil cp sample_small.seq gs://$DEVSHELL_PROJECT_ID
 </li>
 </ol>
 <p>For <strong>Arguments</strong>, enter each of these arguments separately:</p>
-<p><code>"args": [
-            "KmerCounting",
-            "--input",
-            "gs://&lt;my-project-name&gt;/sample_small.seq",
-            "--output",
-            "test.log",
-            "--kmer_length",
-            "31"
-   ]</code></p>
-<p>For <strong>Properties</strong>, enter these Key-Value pairs separately: </p>
-<pre><code>```
-"properties": {
-  "spark.executor.extraClassPath": "gs://&lt;my-project-name&gt;/LocalCluster-assembly-0.2.jar",
-  "spark.driver.maxResultSize": "8g",
-  "spark.network.timeout": "360000",
-  "spark.default.parallelism": "4",
-  "spark.eventLog.enabled": "false"
-}
-```
+<pre><code>   &quot;args&quot;: [
+            &quot;KmerCounting&quot;,
+            &quot;--input&quot;,
+            &quot;gs://&lt;my-project-name&gt;/sample_small.seq&quot;,
+            &quot;--output&quot;,
+            &quot;test.log&quot;,
+            &quot;--kmer_length&quot;,
+            &quot;31&quot;
+   ]
 </code></pre>
+
+<p>For <strong>Properties</strong>, enter these Key-Value pairs separately: </p>
+<pre><code>    &quot;properties&quot;: {
+      &quot;spark.executor.extraClassPath&quot;: &quot;gs://&lt;my-project-name&gt;/LocalCluster-assembly-0.2.jar&quot;,
+      &quot;spark.driver.maxResultSize&quot;: &quot;8g&quot;,
+      &quot;spark.network.timeout&quot;: &quot;360000&quot;,
+      &quot;spark.default.parallelism&quot;: &quot;4&quot;,
+      &quot;spark.eventLog.enabled&quot;: &quot;false&quot;
+    }
+</code></pre>
+
 <ol>
 <li>Click <strong>Submit</strong></li>
 </ol>
@@ -603,15 +592,15 @@ gsutil cp sample_small.seq gs://$DEVSHELL_PROJECT_ID
       
     </div>
     
-      <script src="../assets/javascripts/vendor.83fe6e3c.min.js"></script>
-      <script src="../assets/javascripts/bundle.7e1cb91c.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.a14cc5fd.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.37585f48.min.js"
+            worker: "../assets/javascripts/worker/search.7a2ea5ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
