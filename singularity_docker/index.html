@@ -677,8 +677,9 @@
 <p>2) Local Test</p>
 <p>3) Train text classifier on Lawrencium:</p>
 <ul>
-<li>Upload the Singularity image and training data</li>
-<li>Run the Singularity image on compute nodes</li>
+<li>Upload the Singularity containers and training data</li>
+<li>Run the Singularity container on <strong>CPU</strong> nodes</li>
+<li>Run the Singularity container on <strong>GPU</strong> nodes</li>
 </ul>
 <h2 id="build-the-singularity-container-using-available-aws-deep-learning-docker-containers">Build the Singularity container using available AWS Deep-Learning docker containers</h2>
 <ul>
@@ -954,26 +955,133 @@ t    108344
 dtype: int64
 </code></pre>
 <h2 id="local-test">Local Test</h2>
+<ul>
+<li>Build Singularity container using AWS Deep-Learning Docker <strong>CPU</strong> image</li>
+</ul>
 <pre><code class="shell">  cd container
   sh build_singularity_local_test.sh
 </code></pre>
 
+<ul>
+<li>Build Singularity container using AWS Deep-Learning Docker <strong>GPU</strong> image</li>
+</ul>
+<pre><code class="shell">  sh build_singularity_local_test_gpu.sh
+</code></pre>
+
 <h2 id="train-text-classifier-on-lawrencium">Train text classifier on Lawrencium</h2>
 <ul>
-<li>Upload the Singularity image and training data</li>
+<li>Upload the Singularity containers and training data</li>
 </ul>
 <pre><code class="shell">    sftp lrc-xfer.lbl.gov
     put local_sagemaker-keras-text-classification.sif
+    put local_sagemaker-keras-text-classification_gpu.sif
     put -r local_test
 </code></pre>
 
 <ul>
-<li>Run the Singularity image on Lawrencium compute-node</li>
+<li>Run the Singularity container on Lawrencium <strong>CPU</strong> node</li>
 </ul>
 <pre><code class="shell">    ssh lrc-login.lbl.gov
     cd local_test
     srun  -N 1 -p lr4 -A $ACCOUNT -t 1:0:0 -q lr_normal --pty bash
     sh train_local.sh ../local_sagemaker-keras-text-classification.sif
+</code></pre>
+
+<ul>
+<li>Run the Singularity container on Lawrencium <strong>GPU</strong> node</li>
+</ul>
+<pre><code class="shell">    ssh lrc-login.lbl.gov
+    cd local_test
+    srun  -N 1 -p es1 -A $ACCOUNT -t 1:0:0 --gres=gpu:2 -n 4 -q es_normal --pty bash
+    sh train_local_gpu.sh ../local_sagemaker-keras-text-classification_gpu.sif
+</code></pre>
+
+<pre><code class="shell">Starting the training.
+                                               TITLE                                                URL          PUBLISHER CATEGORY                          STORY             HOSTNAME      TIMESTAMP
+1  Fed official says weak data caused by weather,...  http://www.latimes.com/business/money/la-fi-mo...  Los Angeles Times        b  ddUyU0VZz0BRneMioxUPQVP6sIxvM      www.latimes.com  1394470370698
+2  Fed's Charles Plosser sees high bar for change...  http://www.livemint.com/Politics/H2EvwJSK2VE6O...           Livemint        b  ddUyU0VZz0BRneMioxUPQVP6sIxvM     www.livemint.com  1394470371207
+3  US open: Stocks fall after Fed official hints ...  http://www.ifamagazine.com/news/us-open-stocks...       IFA Magazine        b  ddUyU0VZz0BRneMioxUPQVP6sIxvM  www.ifamagazine.com  1394470371550
+4  Fed risks falling 'behind the curve', Charles ...  http://www.ifamagazine.com/news/fed-risks-fall...       IFA Magazine        b  ddUyU0VZz0BRneMioxUPQVP6sIxvM  www.ifamagazine.com  1394470371793
+5  Fed's Plosser: Nasty Weather Has Curbed Job Gr...  http://www.moneynews.com/Economy/federal-reser...          Moneynews        b  ddUyU0VZz0BRneMioxUPQVP6sIxvM    www.moneynews.com  1394470372027
+Found 65990 unique tokens.
+Shape of data tensor: (422417, 100)
+Shape of label tensor: (422417, 4)
+x_train shape:  (337933, 100)
+Model: &quot;sequential&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+embedding (Embedding)        (None, 100, 100)          1000000   
+_________________________________________________________________
+flatten (Flatten)            (None, 10000)             0         
+_________________________________________________________________
+dense (Dense)                (None, 2)                 20002     
+_________________________________________________________________
+dense_1 (Dense)              (None, 4)                 12        
+=================================================================
+Total params: 1,020,014
+Trainable params: 1,020,014
+Non-trainable params: 0
+_________________________________________________________________
+2020-06-23 23:15:14.245462: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcuda.so.1
+2020-06-23 23:15:16.127338: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x3672c00 executing computations on platform CUDA. Devices:
+2020-06-23 23:15:16.127380: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): GeForce GTX 1080 Ti, Compute Capability 6.1
+2020-06-23 23:15:16.127388: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (1): GeForce GTX 1080 Ti, Compute Capability 6.1
+2020-06-23 23:15:16.127394: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (2): GeForce GTX 1080 Ti, Compute Capability 6.1
+2020-06-23 23:15:16.127399: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (3): GeForce GTX 1080 Ti, Compute Capability 6.1
+2020-06-23 23:15:16.154635: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2999685000 Hz
+2020-06-23 23:15:16.154819: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x3685470 executing computations on platform Host. Devices:
+2020-06-23 23:15:16.154871: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): &lt;undefined&gt;, &lt;undefined&gt;
+2020-06-23 23:15:16.157342: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:02:00.0
+2020-06-23 23:15:16.158085: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 1 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:03:00.0
+2020-06-23 23:15:16.158826: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 2 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:81:00.0
+2020-06-23 23:15:16.159564: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 3 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:82:00.0
+2020-06-23 23:15:16.164279: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2020-06-23 23:15:16.245853: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2020-06-23 23:15:16.286560: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2020-06-23 23:15:16.311842: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2020-06-23 23:15:16.418419: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2020-06-23 23:15:16.483660: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2020-06-23 23:15:16.684841: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2020-06-23 23:15:16.694707: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0, 1, 2, 3
+2020-06-23 23:15:16.697050: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2020-06-23 23:15:16.702301: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1181] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-06-23 23:15:16.702355: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1187]      0 1 2 3 
+2020-06-23 23:15:16.702409: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 0:   N Y N N 
+2020-06-23 23:15:16.702424: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 1:   Y N N N 
+2020-06-23 23:15:16.702445: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 2:   N N N Y 
+2020-06-23 23:15:16.702465: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 3:   N N Y N 
+2020-06-23 23:15:16.711677: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10481 MB memory) -&gt; physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2020-06-23 23:15:16.713584: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10481 MB memory) -&gt; physical GPU (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:03:00.0, compute capability: 6.1)
+2020-06-23 23:15:16.715242: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:2 with 10481 MB memory) -&gt; physical GPU (device: 2, name: GeForce GTX 1080 Ti, pci bus id: 0000:81:00.0, compute capability: 6.1)
+2020-06-23 23:15:16.716880: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:3 with 10481 MB memory) -&gt; physical GPU (device: 3, name: GeForce GTX 1080 Ti, pci bus id: 0000:82:00.0, compute capability: 6.1)
+Train on 337933 samples, validate on 84484 samples
+Epoch 1/6
+2020-06-23 23:15:21.391855: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+337933/337933 - 18s - loss: 0.6149 - acc: 0.7661 - val_loss: 0.5618 - val_acc: 0.7933
+Epoch 2/6
+337933/337933 - 16s - loss: 0.5476 - acc: 0.7972 - val_loss: 0.5513 - val_acc: 0.7981
+Epoch 3/6
+337933/337933 - 16s - loss: 0.5391 - acc: 0.8008 - val_loss: 0.5402 - val_acc: 0.8021
+Epoch 4/6
+337933/337933 - 17s - loss: 0.5355 - acc: 0.8016 - val_loss: 0.5385 - val_acc: 0.8023
+Epoch 5/6
+337933/337933 - 17s - loss: 0.5333 - acc: 0.8029 - val_loss: 0.5374 - val_acc: 0.8013
+Epoch 6/6
+337933/337933 - 16s - loss: 0.5315 - acc: 0.8032 - val_loss: 0.5361 - val_acc: 0.8023
+Training complete. Now saving model to:  /opt/ml/model
+
+Test headline:  What Improved Tech Means for Electric, Self-Driving and Flying Cars
+Predicted category:  t
+
 </code></pre>
 
 <h2 id="references">References</h2>
