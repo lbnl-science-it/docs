@@ -1,0 +1,1583 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="concierge information technology services for science">
+      
+      
+        <link rel="canonical" href="https://lbnl-science-it.github.io/docs/rl_mountain_car_coach_gymEnv/">
+      
+      
+        <meta name="author" content="Shawfeng Dong">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.0">
+    
+    
+      
+        <title>AWS SageMaker: Reinforcement Learning - LBNL Science IT Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mountain-car-with-amazon-sagemaker-rl" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://lbnl-science-it.github.io/docs/" title="LBNL Science IT Docs" class="md-header-nav__button md-logo" aria-label="LBNL Science IT Docs">
+      
+  <img src="../images/7_BL_Vert_547_rgb.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            LBNL Science IT Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              AWS SageMaker: Reinforcement Learning
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lbnl-science-it/docs-source/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub/lbnl-science-it/docs-source
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://lbnl-science-it.github.io/docs/" title="LBNL Science IT Docs" class="md-nav__button md-logo" aria-label="LBNL Science IT Docs">
+      
+  <img src="../images/7_BL_Vert_547_rgb.png" alt="logo">
+
+    </a>
+    LBNL Science IT Docs
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lbnl-science-it/docs-source/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub/lbnl-science-it/docs-source
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../consult/" title="Consulting & Training" class="md-nav__link">
+      Consulting & Training
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../hpc/" title="High-Performance Computing" class="md-nav__link">
+      High-Performance Computing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../data/" title="Data Management & Storage" class="md-nav__link">
+      Data Management & Storage
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../support/" title="Science General Support" class="md-nav__link">
+      Science General Support
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../compute/" title="Compute Resources" class="md-nav__link">
+      Compute Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../storage/" title="Storage Resources" class="md-nav__link">
+      Storage Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../cloud/" title="Cloud Resources" class="md-nav__link">
+      Cloud Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutorials
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sparc_on_lawrencium/" title="SpaRC on Lawrencium" class="md-nav__link">
+      SpaRC on Lawrencium
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sparc_on_gcp/" title="SpaRC on GCP" class="md-nav__link">
+      SpaRC on GCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../container-101/" title="Container 101 on Lawrencium" class="md-nav__link">
+      Container 101 on Lawrencium
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../singularity_docker/" title="Lawrencium: Singularity container using AWS DL docker images" class="md-nav__link">
+      Lawrencium: Singularity container using AWS DL docker images
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sagemaker_keras_text_classification/" title="AWS SageMaker: Text Classification Using Keras & TensorFlow" class="md-nav__link">
+      AWS SageMaker: Text Classification Using Keras & TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        AWS SageMaker: Reinforcement Learning
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="AWS SageMaker: Reinforcement Learning" class="md-nav__link md-nav__link--active">
+      AWS SageMaker: Reinforcement Learning
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patientmountaincar" class="md-nav__link">
+    PatientMountainCar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patientcontinuousmountaincar" class="md-nav__link">
+    PatientContinuousMountainCar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-amazon-sagemaker-notebook" class="md-nav__link">
+    Create an Amazon SageMaker Notebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-jupyterlab" class="md-nav__link">
+    Open JupyterLab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-sample-code" class="md-nav__link">
+    Clone the sample code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imports" class="md-nav__link">
+    Imports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-s3-bucket" class="md-nav__link">
+    Setup S3 bucket
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-variables" class="md-nav__link">
+    Define Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-settings" class="md-nav__link">
+    Configure settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-iam-role" class="md-nav__link">
+    Create an IAM role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-docker-for-local-mode" class="md-nav__link">
+    Install docker for local mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-environment" class="md-nav__link">
+    Setup the environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-presets-for-rl-algorithm" class="md-nav__link">
+    Configure the presets for RL algorithm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-the-training-code" class="md-nav__link">
+    Write the Training Code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#train-the-rl-model-using-the-python-sdk-script-mode" class="md-nav__link">
+    Train the RL model using the Python SDK Script mode
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#store-intermediate-training-output-and-model-checkpoints" class="md-nav__link">
+    Store intermediate training output and model checkpoints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    Visualization
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plot-metrics-for-training-job" class="md-nav__link">
+    Plot metrics for training job
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-rendered-gifs" class="md-nav__link">
+    Visualize the rendered gifs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluation-of-rl-models" class="md-nav__link">
+    Evaluation of RL models
+  </a>
+  
+    <nav class="md-nav" aria-label="Evaluation of RL models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load-checkpointed-model" class="md-nav__link">
+    Load checkpointed model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-evaluation-step" class="md-nav__link">
+    Run the evaluation step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-output" class="md-nav__link">
+    Visualize the output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-deployment" class="md-nav__link">
+    Model deployment
+  </a>
+  
+    <nav class="md-nav" aria-label="Model deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clean-up-endpoint" class="md-nav__link">
+    Clean up endpoint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9-7" type="checkbox" id="nav-9-7">
+    
+    <label class="md-nav__link" for="nav-9-7">
+      Lawrencium: Jupyter Notebook on a GPU node
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Lawrencium: Jupyter Notebook on a GPU node" data-md-level="2">
+      <label class="md-nav__title" for="nav-9-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Lawrencium: Jupyter Notebook on a GPU node
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu/" title="TensorFlow 1.12" class="md-nav__link">
+      TensorFlow 1.12
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu_tensorflow_2.0/" title="TensorFlow 2.0" class="md-nav__link">
+      TensorFlow 2.0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu_tensorflow_2.1/" title="TensorFlow 2.1" class="md-nav__link">
+      TensorFlow 2.1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyterhub_gpu/" title="JupyterHub" class="md-nav__link">
+      JupyterHub
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patientmountaincar" class="md-nav__link">
+    PatientMountainCar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patientcontinuousmountaincar" class="md-nav__link">
+    PatientContinuousMountainCar
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-amazon-sagemaker-notebook" class="md-nav__link">
+    Create an Amazon SageMaker Notebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-jupyterlab" class="md-nav__link">
+    Open JupyterLab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-sample-code" class="md-nav__link">
+    Clone the sample code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imports" class="md-nav__link">
+    Imports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-s3-bucket" class="md-nav__link">
+    Setup S3 bucket
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-variables" class="md-nav__link">
+    Define Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-settings" class="md-nav__link">
+    Configure settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-iam-role" class="md-nav__link">
+    Create an IAM role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-docker-for-local-mode" class="md-nav__link">
+    Install docker for local mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-environment" class="md-nav__link">
+    Setup the environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-presets-for-rl-algorithm" class="md-nav__link">
+    Configure the presets for RL algorithm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-the-training-code" class="md-nav__link">
+    Write the Training Code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#train-the-rl-model-using-the-python-sdk-script-mode" class="md-nav__link">
+    Train the RL model using the Python SDK Script mode
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#store-intermediate-training-output-and-model-checkpoints" class="md-nav__link">
+    Store intermediate training output and model checkpoints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    Visualization
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plot-metrics-for-training-job" class="md-nav__link">
+    Plot metrics for training job
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-rendered-gifs" class="md-nav__link">
+    Visualize the rendered gifs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluation-of-rl-models" class="md-nav__link">
+    Evaluation of RL models
+  </a>
+  
+    <nav class="md-nav" aria-label="Evaluation of RL models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load-checkpointed-model" class="md-nav__link">
+    Load checkpointed model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-evaluation-step" class="md-nav__link">
+    Run the evaluation step
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-output" class="md-nav__link">
+    Visualize the output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-deployment" class="md-nav__link">
+    Model deployment
+  </a>
+  
+    <nav class="md-nav" aria-label="Model deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clean-up-endpoint" class="md-nav__link">
+    Clean up endpoint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/lbnl-science-it/docs-source/blob/master/docs/rl_mountain_car_coach_gymEnv.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="mountain-car-with-amazon-sagemaker-rl">Mountain Car with Amazon SageMaker RL</h1>
+<p>AWS SageMaker Example: https://github.com/awslabs/amazon-sagemaker-examples/tree/master/reinforcement_learning/rl_mountain_car_coach_gymEnv</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Mountain Car is a classic control Reinforcement Learning problem that was first introduced by A. Moore in 1991 [1]. An under-powered car is tasked with climbing a steep mountain, and is only successful when it reaches the top. Luckily there's another mountain on the opposite side which can be used to gain momentum, and launch the car to the peak. It can be tricky to find this optimal solution due to the sparsity of the reward. Complex exploration strategies can be used to incentivise exploration of the mountain, but to keep things simple in this example we extend the amount of time in each episode from Open AI Gym's default of 200 environment steps to 10,000 steps, showing how to customise environments. We consider two variants in this example: <code>PatientMountainCar</code> for discrete actions and <code>PatientContinuousMountainCar</code> for continuous actions.</p>
+<p><img alt="img" src="../images/successful_policy.gif" /></p>
+<h3 id="patientmountaincar"><code>PatientMountainCar</code></h3>
+<blockquote>
+<ol>
+<li>Objective: Get the car to the top of the right hand side mountain.</li>
+<li>Environment(s): Open AI Gym's <code>MountainCar-v0</code> that is extended to 10,000 steps per episode.</li>
+<li>State: Car's horizontal position and velocity (can be negative).</li>
+<li>Action: Direction of push (left, nothing or right).</li>
+<li>Reward: -1 for every environment step until success, which incentivises quick solutions.</li>
+</ol>
+</blockquote>
+<h3 id="patientcontinuousmountaincar"><code>PatientContinuousMountainCar</code></h3>
+<blockquote>
+<ol>
+<li>Objective: Get the car to the top of the right hand side mountain.</li>
+<li>Environment(s): Open AI Gym's <code>MountainCarContinuous-v0</code> that is extended to 10,000 steps per episode.</li>
+<li>State: Car's horizontal position and velocity (can be negative).</li>
+<li>Action: Mmagnitude of push (if negative push to left, if positive push to right).</li>
+<li>Reward: +100 for reaching top of the right hand side mountain, minus the squared sum of actions from start to end.</li>
+</ol>
+</blockquote>
+<p>[1] A. Moore, Efficient Memory-Based Learning for Robot Control, PhD thesis, University of Cambridge, November 1990.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li>
+<h4 id="create-an-amazon-sagemaker-notebook"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/howitworks-create-ws.html">Create an Amazon SageMaker Notebook</a></h4>
+</li>
+<li>
+<h4 id="open-jupyterlab"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/howitworks-access-ws.html">Open JupyterLab</a></h4>
+</li>
+</ol>
+<h3 id="clone-the-sample-code">Clone the sample code</h3>
+<ul>
+<li>In <strong>JupyterLab</strong>, click the <strong>Terminal</strong> icon to open a new terminal</li>
+<li>To clone the <a href="https://github.com/lbnl-science-it/aws-sagemaker-rl"><strong>tutorial repository</strong></a>, run the following command</li>
+</ul>
+<pre><code class="shell">  git clone https://github.com/lbnl-science-it/aws-sagemaker-rl.git
+</code></pre>
+
+<ul>
+<li>In <strong>JupyterLab</strong>, navigate to <code>aws-sagemaker-rl</code> and open <code>rl_mountain_car_coach_gymEnv.ipynb</code></li>
+</ul>
+<h3 id="contents">Contents</h3>
+<ul>
+<li><code>rl_mountain_car_coach_gym.ipynb</code>: <a href="https://github.com/lbnl-science-it/aws-sagemaker-rl/blob/master/rl_mountain_car_coach_gymEnv.ipynb"><strong>notebook used for training Mountain Car policy</strong></a></li>
+<li><code>src/patient_envs.py</code>: custom environments defined here.</li>
+<li><code>src/train-coach.py</code>: launcher for coach training</li>
+<li><code>src/preset-mountain-car-continuous-clipped-ppo.py</code>: coach preset for Clipped PPO.</li>
+<li><code>src/preset-mountain-car-dqn.py</code>: coach preset for DQN.</li>
+</ul>
+<h3 id="imports">Imports</h3>
+<p>To get started, we'll import the Python libraries we need, set up the environment with a few prerequisites for permissions and configurations.</p>
+<pre><code class="python">import sagemaker
+import boto3
+import sys
+import os
+import glob
+import re
+import subprocess
+import numpy as np
+from IPython.display import HTML
+import time
+from time import gmtime, strftime
+sys.path.append(&quot;common&quot;)
+from misc import get_execution_role, wait_for_s3_object
+from sagemaker.rl import RLEstimator, RLToolkit, RLFramework
+</code></pre>
+
+<h3 id="setup-s3-bucket">Setup S3 bucket</h3>
+<p>Set up the linkage and authentication to the S3 bucket that you want to use for checkpoint and the metadata. </p>
+<pre><code class="python">sage_session = sagemaker.session.Session()
+s3_bucket = sage_session.default_bucket()  
+s3_output_path = 's3://{}/'.format(s3_bucket)
+print(&quot;S3 bucket path: {}&quot;.format(s3_output_path))
+</code></pre>
+
+<pre><code>S3 bucket path: s3://sagemaker-us-west-2-485444084140/
+</code></pre>
+<h3 id="define-variables">Define Variables</h3>
+<p>We define variables such as the job prefix for the training jobs <em>and the image path for the container (only when this is BYOC).</em></p>
+<pre><code class="python"># create unique job name 
+job_name_prefix = 'rl-mountain-car'
+</code></pre>
+
+<h3 id="configure-settings">Configure settings</h3>
+<p>You can run your RL training jobs on a SageMaker notebook instance or on your own machine. In both of these scenarios, you can run in either 'local' (where you run the commands) or 'SageMaker' mode (on SageMaker training instances). 'local' mode uses the SageMaker Python SDK to run your code in Docker containers locally. It can speed up iterative testing and debugging while using the same familiar Python SDK interface. Just set <code>local_mode = True</code>. And when you're ready move to 'SageMaker' mode to scale things up.</p>
+<pre><code class="python"># run in local mode?
+local_mode = False
+</code></pre>
+
+<h3 id="create-an-iam-role">Create an IAM role</h3>
+<p>Either get the execution role when running from a SageMaker notebook instance <code>role = sagemaker.get_execution_role()</code> or, when running from local notebook instance, use utils method <code>role = get_execution_role()</code> to create an execution role.</p>
+<pre><code class="python">try:
+    role = sagemaker.get_execution_role()
+except:
+    role = get_execution_role()
+
+print(&quot;Using IAM role arn: {}&quot;.format(role))
+</code></pre>
+
+<h3 id="install-docker-for-local-mode">Install docker for <code>local</code> mode</h3>
+<p>In order to work in <code>local</code> mode, you need to have docker installed. When running from you local machine, please make sure that you have docker or docker-compose (for local CPU machines) and nvidia-docker (for local GPU machines) installed. Alternatively, when running from a SageMaker notebook instance, you can simply run the following script to install dependenceis.</p>
+<p>Note, you can only run a single local notebook at one time.</p>
+<pre><code class="python"># only run from SageMaker notebook instance
+if local_mode:
+    !/bin/bash ./common/setup.sh
+</code></pre>
+
+<h2 id="setup-the-environment">Setup the environment</h2>
+<p>We create a file called <code>src/patient_envs.py</code> for our modified environments. We can create a custom environment class or create a function that returns our environment. Since we're using Open AI Gym environment and wrappers, we just create functions that take the classic control environments <code>MountainCarEnv</code> and <code>Continuous_MountainCarEnv</code> and wrap them with a <code>TimeLimit</code> where we specify the <code>max_episode_steps</code> to 10,000.</p>
+<pre><code class="python">!pygmentize src/patient_envs.py
+</code></pre>
+
+<pre><code>[34mfrom[39;49;00m [04m[36mgym.envs.classic_control.mountain_car[39;49;00m [34mimport[39;49;00m MountainCarEnv
+[34mfrom[39;49;00m [04m[36mgym.envs.classic_control.continuous_mountain_car[39;49;00m [34mimport[39;49;00m Continuous_MountainCarEnv
+[34mfrom[39;49;00m [04m[36mgym.wrappers.time_limit[39;49;00m [34mimport[39;49;00m TimeLimit
+
+
+[34mdef[39;49;00m [32mPatientMountainCar[39;49;00m():
+    env = MountainCarEnv()
+    [34mreturn[39;49;00m TimeLimit(env, max_episode_steps=[34m10000[39;49;00m)
+
+
+[34mdef[39;49;00m [32mPatientContinuousMountainCar[39;49;00m():
+    env = Continuous_MountainCarEnv()
+    [34mreturn[39;49;00m TimeLimit(env, max_episode_steps=[34m10000[39;49;00m)
+</code></pre>
+<h2 id="configure-the-presets-for-rl-algorithm">Configure the presets for RL algorithm</h2>
+<p>The presets that configure the RL training jobs are defined in the "preset-mountain-car-continuous-clipped-ppo.py" file which is also uploaded on the /src directory. Also see "preset-mountain-car-dqn.py" for the discrete environment case. Using the preset file, you can define agent parameters to select the specific agent algorithm. You can also set the environment parameters, define the schedule and visualization parameters, and define the graph manager. The schedule presets will define the number of heat up steps, periodic evaluation steps, training steps between evaluations.</p>
+<p>These can be overridden at runtime by specifying the RLCOACH_PRESET hyperparameter. Additionally, it can be used to define custom hyperparameters.</p>
+<pre><code class="python">!pygmentize src/preset-mountain-car-continuous-clipped-ppo.py
+</code></pre>
+
+<pre><code>[34mfrom[39;49;00m [04m[36mrl_coach.agents.clipped_ppo_agent[39;49;00m [34mimport[39;49;00m ClippedPPOAgentParameters
+[34mfrom[39;49;00m [04m[36mrl_coach.architectures.layers[39;49;00m [34mimport[39;49;00m Dense
+[34mfrom[39;49;00m [04m[36mrl_coach.base_parameters[39;49;00m [34mimport[39;49;00m VisualizationParameters, PresetValidationParameters
+[34mfrom[39;49;00m [04m[36mrl_coach.core_types[39;49;00m [34mimport[39;49;00m TrainingSteps, EnvironmentEpisodes, EnvironmentSteps, RunPhase, \
+                                SelectedPhaseOnlyDumpFilter, MaxDumpFilter
+[34mfrom[39;49;00m [04m[36mrl_coach.environments.gym_environment[39;49;00m [34mimport[39;49;00m GymVectorEnvironment
+[34mfrom[39;49;00m [04m[36mrl_coach.exploration_policies.e_greedy[39;49;00m [34mimport[39;49;00m EGreedyParameters
+[34mfrom[39;49;00m [04m[36mrl_coach.filters.observation.observation_normalization_filter[39;49;00m [34mimport[39;49;00m ObservationNormalizationFilter
+[34mfrom[39;49;00m [04m[36mrl_coach.graph_managers.basic_rl_graph_manager[39;49;00m [34mimport[39;49;00m BasicRLGraphManager
+[34mfrom[39;49;00m [04m[36mrl_coach.graph_managers.graph_manager[39;49;00m [34mimport[39;49;00m ScheduleParameters
+[34mfrom[39;49;00m [04m[36mrl_coach.schedules[39;49;00m [34mimport[39;49;00m LinearSchedule
+
+[37m####################[39;49;00m
+[37m# Graph Scheduling #[39;49;00m
+[37m####################[39;49;00m
+
+schedule_params = ScheduleParameters()
+schedule_params.improve_steps = EnvironmentEpisodes([34m100[39;49;00m)
+schedule_params.steps_between_evaluation_periods = EnvironmentEpisodes([34m10[39;49;00m)
+schedule_params.evaluation_steps = EnvironmentEpisodes([34m1[39;49;00m)
+schedule_params.heatup_steps = EnvironmentEpisodes([34m10[39;49;00m)
+
+[37m#########[39;49;00m
+[37m# Agent #[39;49;00m
+[37m#########[39;49;00m
+agent_params = ClippedPPOAgentParameters()
+
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].learning_rate = [34m0.001[39;49;00m
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].input_embedders_parameters[[33m'[39;49;00m[33mobservation[39;49;00m[33m'[39;49;00m].activation_function = [33m'[39;49;00m[33mtanh[39;49;00m[33m'[39;49;00m
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].input_embedders_parameters[[33m'[39;49;00m[33mobservation[39;49;00m[33m'[39;49;00m].scheme = [Dense([34m32[39;49;00m)]
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].middleware_parameters.scheme = [Dense([34m32[39;49;00m)]
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].middleware_parameters.activation_function = [33m'[39;49;00m[33mtanh[39;49;00m[33m'[39;49;00m
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].batch_size = [34m256[39;49;00m
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].optimizer_epsilon = [34m1e-5[39;49;00m
+agent_params.network_wrappers[[33m'[39;49;00m[33mmain[39;49;00m[33m'[39;49;00m].adam_optimizer_beta2 = [34m0.999[39;49;00m
+
+agent_params.algorithm.clip_likelihood_ratio_using_epsilon = [34m0.3[39;49;00m
+agent_params.algorithm.clipping_decay_schedule = LinearSchedule([34m0.5[39;49;00m, [34m0.1[39;49;00m, [34m10000[39;49;00m * [34m50[39;49;00m)
+agent_params.algorithm.beta_entropy = [34m0[39;49;00m
+agent_params.algorithm.gae_lambda = [34m0.95[39;49;00m
+agent_params.algorithm.discount = [34m0.999[39;49;00m
+agent_params.algorithm.estimate_state_value_using_gae = [36mTrue[39;49;00m
+
+agent_params.algorithm.num_steps_between_copying_online_weights_to_target = EnvironmentEpisodes([34m10[39;49;00m)
+agent_params.algorithm.num_episodes_in_experience_replay = [34m100[39;49;00m
+agent_params.algorithm.num_consecutive_playing_steps = EnvironmentEpisodes([34m10[39;49;00m)
+agent_params.algorithm.optimization_epochs = [34m10[39;49;00m
+
+agent_params.pre_network_filter.add_observation_filter([33m'[39;49;00m[33mobservation[39;49;00m[33m'[39;49;00m, [33m'[39;49;00m[33mnormalize_observation[39;49;00m[33m'[39;49;00m,
+                                                       ObservationNormalizationFilter(name=[33m'[39;49;00m[33mnormalize_observation[39;49;00m[33m'[39;49;00m))
+
+[37m###############[39;49;00m
+[37m# Environment #[39;49;00m
+[37m###############[39;49;00m
+env_params = GymVectorEnvironment(level=[33m'[39;49;00m[33mpatient_envs:PatientContinuousMountainCar[39;49;00m[33m'[39;49;00m)
+
+[37m#################[39;49;00m
+[37m# Visualization #[39;49;00m
+[37m#################[39;49;00m
+vis_params = VisualizationParameters()
+vis_params.dump_gifs = [36mTrue[39;49;00m
+vis_params.video_dump_filters = [SelectedPhaseOnlyDumpFilter(RunPhase.TEST), MaxDumpFilter()]
+
+[37m########[39;49;00m
+[37m# Test #[39;49;00m
+[37m########[39;49;00m
+preset_validation_params = PresetValidationParameters()
+preset_validation_params.test = [36mTrue[39;49;00m
+preset_validation_params.min_reward_threshold = [34m150[39;49;00m
+preset_validation_params.max_episodes_to_achieve_reward = [34m250[39;49;00m
+
+graph_manager = BasicRLGraphManager(agent_params=agent_params, env_params=env_params,
+                                    schedule_params=schedule_params, vis_params=vis_params,
+                                    preset_validation_params=preset_validation_params)
+</code></pre>
+<h2 id="write-the-training-code">Write the Training Code</h2>
+<p>The training code is written in the file “train-coach.py” which is uploaded in the /src directory. 
+We create a custom <code>SageMakerCoachPresetLauncher</code> which sets the default preset, maps and ties hyperparameters.</p>
+<pre><code class="python">!pygmentize src/train-coach.py
+</code></pre>
+
+<pre><code>[34mfrom[39;49;00m [04m[36msagemaker_rl.coach_launcher[39;49;00m [34mimport[39;49;00m SageMakerCoachPresetLauncher
+
+
+[34mclass[39;49;00m [04m[32mMyLauncher[39;49;00m(SageMakerCoachPresetLauncher):
+
+    [34mdef[39;49;00m [32mdefault_preset_name[39;49;00m([36mself[39;49;00m):
+        [33m"""This points to a .py file that configures everything about the RL job.[39;49;00m
+[33m        It can be overridden at runtime by specifying the RLCOACH_PRESET hyperparameter.[39;49;00m
+[33m        """[39;49;00m
+        [34mreturn[39;49;00m [33m'[39;49;00m[33mpreset-mountaincarcontinuous-clippedppo.py[39;49;00m[33m'[39;49;00m
+
+    [34mdef[39;49;00m [32mmap_hyperparameter[39;49;00m([36mself[39;49;00m, name, value):
+        [33m"""Here we configure some shortcut names for hyperparameters that we expect to use frequently.[39;49;00m
+[33m        Essentially anything in the preset file can be overridden through a hyperparameter with a name [39;49;00m
+[33m        like "rl.agent_params.algorithm.etc".  [39;49;00m
+[33m        """[39;49;00m
+        [37m# maps from alias (key) to fully qualified coach parameter (value)[39;49;00m
+        mapping = {
+                      [33m"[39;49;00m[33mevaluation_freq_env_steps[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.steps_between_evaluation_periods:EnvironmentSteps[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mevaluation_episodes[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.evaluation_steps:EnvironmentEpisodes[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mimprove_steps[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.improve_steps:EnvironmentSteps[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mdiscount[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.algorithm.discount[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mgae_lambda[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.algorithm.gae_lambda[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mtraining_freq_env_steps[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.algorithm.num_consecutive_playing_steps:EnvironmentSteps[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mtraining_learning_rate[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.network_wrappers.main.learning_rate[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mtraining_batch_size[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.network_wrappers.main.batch_size[39;49;00m[33m"[39;49;00m,
+                      [33m"[39;49;00m[33mtraining_epochs[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mrl.agent_params.algorithm.optimization_epochs[39;49;00m[33m"[39;49;00m
+                  }
+        [34mif[39;49;00m name [35min[39;49;00m mapping:
+            [36mself[39;49;00m.apply_hyperparameter(mapping[name], value)
+        [34melse[39;49;00m:
+            [36msuper[39;49;00m().map_hyperparameter(name, value)
+
+    [34mdef[39;49;00m [32mget_config_args[39;49;00m([36mself[39;49;00m, parser):
+        args = [36msuper[39;49;00m().get_config_args(parser)
+
+        [37m# Above line creates `self.hyperparameters` which is a collection of hyperparameters[39;49;00m
+        [37m# that are to be added to graph manager when it's created. At this stage they are [39;49;00m
+        [37m# fully qualified names since already passed through `map_hyperparameter`.[39;49;00m
+
+        [37m# Keeps target network the same for all epochs of a single 'policy training' stage.[39;49;00m
+        src_hp = [33m"[39;49;00m[33mrl.agent_params.algorithm.num_consecutive_playing_steps:EnvironmentSteps[39;49;00m[33m"[39;49;00m
+        target_hp = [33m"[39;49;00m[33mrl.agent_params.algorithm.num_steps_between_copying_online_weights_to_target:EnvironmentSteps[39;49;00m[33m"[39;49;00m
+        [34mif[39;49;00m [36mself[39;49;00m.hyperparameters.hp_dict.get(src_hp, [36mFalse[39;49;00m):
+            src_val = [36mint[39;49;00m([36mself[39;49;00m.hyperparameters.hp_dict[src_hp])
+            [36mself[39;49;00m.hyperparameters.hp_dict[target_hp] = src_val
+
+        [37m# Evaluate after each 'policy training' stage[39;49;00m
+        src_hp = [33m"[39;49;00m[33mrl.agent_params.algorithm.num_consecutive_playing_steps:EnvironmentSteps[39;49;00m[33m"[39;49;00m
+        target_hp = [33m"[39;49;00m[33mrl.steps_between_evaluation_periods:EnvironmentSteps[39;49;00m[33m"[39;49;00m
+        [34mif[39;49;00m [36mself[39;49;00m.hyperparameters.hp_dict.get(src_hp, [36mFalse[39;49;00m):
+            src_val = [36mint[39;49;00m([36mself[39;49;00m.hyperparameters.hp_dict[src_hp])
+            [36mself[39;49;00m.hyperparameters.hp_dict[target_hp] = src_val
+
+        [34mreturn[39;49;00m args
+
+
+[34mif[39;49;00m [31m__name__[39;49;00m == [33m'[39;49;00m[33m__main__[39;49;00m[33m'[39;49;00m:
+    MyLauncher.train_main()
+</code></pre>
+<h2 id="train-the-rl-model-using-the-python-sdk-script-mode">Train the RL model using the Python SDK Script mode</h2>
+<p>If you are using local mode, the training will run on the notebook instance. When using SageMaker for training, you can select a GPU or CPU instance. The RLEstimator is used for training RL jobs. </p>
+<ol>
+<li>Specify the source directory where the environment, presets and training code is uploaded.</li>
+<li>Specify the entry point as the training code </li>
+<li>Specify the choice of RL toolkit and framework. This automatically resolves to the ECR path for the RL Container. </li>
+<li>Define the training parameters such as the instance count, job name, S3 path for output and job name. </li>
+<li>Specify the hyperparameters for the RL agent algorithm. The RLCOACH_PRESET can be used to specify the RL agent algorithm you want to use. </li>
+<li>Define the metrics definitions that you are interested in capturing in your logs. These can also be visualized in CloudWatch and SageMaker Notebooks. </li>
+</ol>
+<p>We use a variant of Proximal Policy Optimization (PPO) called Clipped PPO, which removes the need for complex KL divergence calculations.</p>
+<pre><code class="python">if local_mode:
+    instance_type = 'local'
+else:
+    instance_type = &quot;ml.m4.4xlarge&quot;
+
+
+estimator = RLEstimator(entry_point=&quot;train-coach.py&quot;,
+                        source_dir='src',
+                        dependencies=[&quot;common/sagemaker_rl&quot;],
+                        toolkit=RLToolkit.COACH,
+                        toolkit_version='0.11.0',
+                        framework=RLFramework.MXNET,
+                        role=role,
+                        train_instance_type=instance_type,
+                        train_instance_count=1,
+                        output_path=s3_output_path,
+                        base_job_name=job_name_prefix,
+                        hyperparameters = {                        
+                            &quot;RLCOACH_PRESET&quot;: &quot;preset-mountain-car-continuous-clipped-ppo&quot;, # &quot;preset-mountain-car-dqn&quot;,
+                            &quot;discount&quot;: 0.995,
+                            &quot;gae_lambda&quot;: 0.997,
+                            &quot;evaluation_episodes&quot;: 3,
+                            # approx 100 episodes
+                            &quot;improve_steps&quot;: 100000,
+                            # approx 5 episodes to start with
+                            &quot;training_freq_env_steps&quot;: 75000, 
+                            &quot;training_learning_rate&quot;: 0.004,
+                            &quot;training_batch_size&quot;: 256,
+                            # times number below by training_freq_env_steps to get total samples per policy training
+                            &quot;training_epochs&quot;: 15,
+                            'save_model': 1
+                        }
+                    )
+
+estimator.fit(wait=local_mode)
+</code></pre>
+
+<h2 id="store-intermediate-training-output-and-model-checkpoints">Store intermediate training output and model checkpoints</h2>
+<p>The output from the training job above is stored on S3. The intermediate folder contains gifs and metadata of the training.</p>
+<pre><code class="python">job_name=estimator._current_job_name
+print(&quot;Job name: {}&quot;.format(job_name))
+
+s3_url = &quot;s3://{}/{}&quot;.format(s3_bucket,job_name)
+
+if local_mode:
+    output_tar_key = &quot;{}/output.tar.gz&quot;.format(job_name)
+else:
+    output_tar_key = &quot;{}/output/output.tar.gz&quot;.format(job_name)
+
+intermediate_folder_key = &quot;{}/output/intermediate/&quot;.format(job_name)
+output_url = &quot;s3://{}/{}&quot;.format(s3_bucket, output_tar_key)
+intermediate_url = &quot;s3://{}/{}&quot;.format(s3_bucket, intermediate_folder_key)
+
+print(&quot;S3 job path: {}&quot;.format(s3_url))
+print(&quot;Output.tar.gz location: {}&quot;.format(output_url))
+print(&quot;Intermediate folder path: {}&quot;.format(intermediate_url))
+
+tmp_dir = &quot;/tmp/{}&quot;.format(job_name)
+os.system(&quot;mkdir {}&quot;.format(tmp_dir))
+print(&quot;Create local folder {}&quot;.format(tmp_dir))
+</code></pre>
+
+<h2 id="visualization">Visualization</h2>
+<h3 id="plot-metrics-for-training-job">Plot metrics for training job</h3>
+<p>We can pull the reward metric of the training and plot it to see the performance of the model over time.</p>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+
+csv_file_name = &quot;worker_0.simple_rl_graph.main_level.main_level.agent_0.csv&quot;
+key = os.path.join(intermediate_folder_key, csv_file_name)
+wait_for_s3_object(s3_bucket, key, tmp_dir)
+
+csv_file = &quot;{}/{}&quot;.format(tmp_dir, csv_file_name)
+df = pd.read_csv(csv_file)
+df = df.dropna(subset=['Training Reward'])
+x_axis = 'Episode #'
+y_axis = 'Training Reward'
+
+if len(df) &gt; 0:
+    plt = df.plot(x=x_axis,y=y_axis, figsize=(12,5), legend=True, style='b-')
+    plt.set_ylabel(y_axis)
+    plt.set_xlabel(x_axis)
+</code></pre>
+
+<h3 id="visualize-the-rendered-gifs">Visualize the rendered gifs</h3>
+<p>The latest gif file found in the gifs directory is displayed. You can replace the tmp.gif file below to visualize other files generated.</p>
+<pre><code class="python">key = os.path.join(intermediate_folder_key, 'gifs')
+wait_for_s3_object(s3_bucket, key, tmp_dir)    
+print(&quot;Copied gifs files to {}&quot;.format(tmp_dir))
+</code></pre>
+
+<pre><code class="python">glob_pattern = os.path.join(&quot;{}/*.gif&quot;.format(tmp_dir))
+gifs = [file for file in glob.iglob(glob_pattern, recursive=True)]
+extract_episode = lambda string: int(re.search('.*episode-(\d*)_.*', string, re.IGNORECASE).group(1))
+gifs.sort(key=extract_episode)
+print(&quot;GIFs found:\n{}&quot;.format(&quot;\n&quot;.join([os.path.basename(gif) for gif in gifs])))    
+</code></pre>
+
+<pre><code>GIFs found:
+2020-04-22-06-41-49_episode-79_score--32.02112377668456.gif
+</code></pre>
+<pre><code class="python"># visualize a specific episode
+gif_index = -1 # since we want last gif
+gif_filepath = gifs[gif_index]
+gif_filename = os.path.basename(gif_filepath)
+print(&quot;Selected GIF: {}&quot;.format(gif_filename))
+os.system(&quot;mkdir -p ./src/tmp/ &amp;&amp; cp {} ./src/tmp/{}.gif&quot;.format(gif_filepath, gif_filename))
+HTML('&lt;img src=&quot;./src/tmp/{}.gif&quot;&gt;'.format(gif_filename))
+</code></pre>
+
+<pre><code>Selected GIF: 2020-04-22-06-41-49_episode-79_score--32.02112377668456.gif
+</code></pre>
+<p><img alt="img" src="../images/2020-04-22-06-41-49_episode-79_score--32.02112377668456.gif.gif" /></p>
+<h2 id="evaluation-of-rl-models">Evaluation of RL models</h2>
+<p>We use the last checkpointed model to run evaluation for the RL Agent. </p>
+<h3 id="load-checkpointed-model">Load checkpointed model</h3>
+<p>Checkpointed data from the previously trained models will be passed on for evaluation / inference in the checkpoint channel. In local mode, we can simply use the local directory, whereas in the SageMaker mode, it needs to be moved to S3 first.</p>
+<pre><code class="python">wait_for_s3_object(s3_bucket, output_tar_key, tmp_dir)  
+
+if not os.path.isfile(&quot;{}/output.tar.gz&quot;.format(tmp_dir)):
+    raise FileNotFoundError(&quot;File output.tar.gz not found&quot;)
+os.system(&quot;tar -xvzf {}/output.tar.gz -C {}&quot;.format(tmp_dir, tmp_dir))
+
+if local_mode:
+    checkpoint_dir = &quot;{}/data/checkpoint&quot;.format(tmp_dir)
+else:
+    checkpoint_dir = &quot;{}/checkpoint&quot;.format(tmp_dir)
+
+print(&quot;Checkpoint directory {}&quot;.format(checkpoint_dir))
+</code></pre>
+
+<pre><code class="python">if local_mode:
+    checkpoint_path = 'file://{}'.format(checkpoint_dir)
+    print(&quot;Local checkpoint file path: {}&quot;.format(checkpoint_path))
+else:
+    checkpoint_path = &quot;s3://{}/{}/checkpoint/&quot;.format(s3_bucket, job_name)
+    if not os.listdir(checkpoint_dir):
+        raise FileNotFoundError(&quot;Checkpoint files not found under the path&quot;)
+    os.system(&quot;aws s3 cp --recursive {} {}&quot;.format(checkpoint_dir, checkpoint_path))
+    print(&quot;S3 checkpoint file path: {}&quot;.format(checkpoint_path))
+</code></pre>
+
+<h3 id="run-the-evaluation-step">Run the evaluation step</h3>
+<p>Use the checkpointed model to run the evaluation step. </p>
+<pre><code class="python">estimator_eval = RLEstimator(role=role,
+                             source_dir='src/',
+                             dependencies=[&quot;common/sagemaker_rl&quot;],
+                             toolkit=RLToolkit.COACH,
+                             toolkit_version='0.11.0',
+                             framework=RLFramework.MXNET,
+                             entry_point=&quot;evaluate-coach.py&quot;,
+                             train_instance_count=1,
+                             train_instance_type=instance_type,
+                             hyperparameters = {
+                                 &quot;RLCOACH_PRESET&quot;: &quot;preset-mountain-car-continuous-clipped-ppo&quot;,
+                                 &quot;evaluate_steps&quot;: 10000*2 # evaluate on 2 episodes
+                             }
+                            )
+
+estimator_eval.fit({'checkpoint': checkpoint_path})
+</code></pre>
+
+<h3 id="visualize-the-output">Visualize the output</h3>
+<p>Optionally, you can run the steps defined earlier to visualize the output </p>
+<h2 id="model-deployment">Model deployment</h2>
+<p>Since we specified MXNet when configuring the RLEstimator, the MXNet deployment container will be used for hosting.</p>
+<pre><code class="python"># Amazon SageMaker Pricing
+# ml.t2.medium  $0.065
+# ml.t2.large   $0.1299
+# ml.t2.xlarge  $0.2598
+# ml.m4.xlarge  $0.28
+predictor = estimator.deploy(initial_instance_count=1,
+                             instance_type=&quot;ml.t2.large&quot;,
+                             entry_point='deploy-mxnet-coach.py')
+</code></pre>
+
+<pre><code>Using already existing model: rl-mountain-car-2020-04-22-06-34-27-307
+
+
+-----------!
+</code></pre>
+<p>We can test the endpoint with 2 samples observations. Starting with the car on the right side, but starting to fall back down the hill.</p>
+<pre><code class="python">output = predictor.predict(np.array([0.5, -0.5]))
+action = output[1][0]
+action
+</code></pre>
+
+<pre><code>[-0.15561622381210327]
+</code></pre>
+<p>We see the policy decides to move the car to the left (negative value). And similarly in the other direction.</p>
+<pre><code class="python">output = predictor.predict(np.array([-0.5, 0.5]))
+action = output[1][0]
+action
+</code></pre>
+
+<pre><code>[0.20560654997825623]
+</code></pre>
+<h3 id="clean-up-endpoint">Clean up endpoint</h3>
+<pre><code class="python">#predictor.delete_endpoint()
+</code></pre>
+
+<h2 id="references">References</h2>
+<ul>
+<li>https://github.com/awslabs/amazon-sagemaker-examples/tree/master/reinforcement_learning/rl_mountain_car_coach_gymEnv</li>
+<li>https://github.com/lbnl-science-it/aws-sagemaker-rl</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../sagemaker_keras_text_classification/" title="AWS SageMaker: Text Classification Using Keras & TensorFlow" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                AWS SageMaker: Text Classification Using Keras & TensorFlow
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../jupyter_gpu/" title="TensorFlow 1.12" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                TensorFlow 1.12
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; LBNL 2020 Science IT Consultants
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.a14cc5fd.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.7a2ea5ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

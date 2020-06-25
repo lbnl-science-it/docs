@@ -1,0 +1,1415 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="concierge information technology services for science">
+      
+      
+        <link rel="canonical" href="https://lbnl-science-it.github.io/docs/sagemaker_keras_text_classification/">
+      
+      
+        <meta name="author" content="Shawfeng Dong">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.3.0">
+    
+    
+      
+        <title>AWS SageMaker: Text Classification Using Keras & TensorFlow - LBNL Science IT Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://lbnl-science-it.github.io/docs/" title="LBNL Science IT Docs" class="md-header-nav__button md-logo" aria-label="LBNL Science IT Docs">
+      
+  <img src="../images/7_BL_Vert_547_rgb.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            LBNL Science IT Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              AWS SageMaker: Text Classification Using Keras & TensorFlow
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lbnl-science-it/docs-source/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub/lbnl-science-it/docs-source
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://lbnl-science-it.github.io/docs/" title="LBNL Science IT Docs" class="md-nav__button md-logo" aria-label="LBNL Science IT Docs">
+      
+  <img src="../images/7_BL_Vert_547_rgb.png" alt="logo">
+
+    </a>
+    LBNL Science IT Docs
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lbnl-science-it/docs-source/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub/lbnl-science-it/docs-source
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../consult/" title="Consulting & Training" class="md-nav__link">
+      Consulting & Training
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../hpc/" title="High-Performance Computing" class="md-nav__link">
+      High-Performance Computing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../data/" title="Data Management & Storage" class="md-nav__link">
+      Data Management & Storage
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../support/" title="Science General Support" class="md-nav__link">
+      Science General Support
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../compute/" title="Compute Resources" class="md-nav__link">
+      Compute Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../storage/" title="Storage Resources" class="md-nav__link">
+      Storage Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../cloud/" title="Cloud Resources" class="md-nav__link">
+      Cloud Resources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutorials
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sparc_on_lawrencium/" title="SpaRC on Lawrencium" class="md-nav__link">
+      SpaRC on Lawrencium
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sparc_on_gcp/" title="SpaRC on GCP" class="md-nav__link">
+      SpaRC on GCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../container-101/" title="Container 101 on Lawrencium" class="md-nav__link">
+      Container 101 on Lawrencium
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../singularity_docker/" title="Lawrencium: Singularity container using AWS DL docker images" class="md-nav__link">
+      Lawrencium: Singularity container using AWS DL docker images
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        AWS SageMaker: Text Classification Using Keras & TensorFlow
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="AWS SageMaker: Text Classification Using Keras & TensorFlow" class="md-nav__link md-nav__link--active">
+      AWS SageMaker: Text Classification Using Keras & TensorFlow
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-amazon-sagemaker-notebook" class="md-nav__link">
+    Create an Amazon SageMaker Notebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-jupyterlab" class="md-nav__link">
+    Open JupyterLab
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-test" class="md-nav__link">
+    Local Test:
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Test:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-sample-code" class="md-nav__link">
+    Clone the sample code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-and-hosting-the-text-classifier-locally-on-the-jupyterlab-notebook-instance" class="md-nav__link">
+    Training and hosting the text classifier locally (on the JupyterLab notebook instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction" class="md-nav__link">
+    Prediction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-exploration" class="md-nav__link">
+    Data Exploration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training-and-hosting-your-algorithm-in-amazon-sagemaker" class="md-nav__link">
+    Training and Hosting your Algorithm in Amazon SageMaker
+  </a>
+  
+    <nav class="md-nav" aria-label="Training and Hosting your Algorithm in Amazon SageMaker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-and-registering-the-container" class="md-nav__link">
+    Building and registering the container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-the-environment" class="md-nav__link">
+    Set up the environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-session" class="md-nav__link">
+    Create the session
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-data-for-training" class="md-nav__link">
+    Upload the data for training
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-estimator-and-fit-the-model" class="md-nav__link">
+    Create an estimator and fit the model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-model" class="md-nav__link">
+    Deploy the model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction_1" class="md-nav__link">
+    Prediction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-test" class="md-nav__link">
+    Endpoint Test
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invokeendpoint-using-boto3" class="md-nav__link">
+    InvokeEndpoint using boto3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeendpoint-using-aws-cli" class="md-nav__link">
+    InvokeEndpoint using AWS CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-cleanup" class="md-nav__link">
+    Optional cleanup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rl_mountain_car_coach_gymEnv/" title="AWS SageMaker: Reinforcement Learning" class="md-nav__link">
+      AWS SageMaker: Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9-7" type="checkbox" id="nav-9-7">
+    
+    <label class="md-nav__link" for="nav-9-7">
+      Lawrencium: Jupyter Notebook on a GPU node
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Lawrencium: Jupyter Notebook on a GPU node" data-md-level="2">
+      <label class="md-nav__title" for="nav-9-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Lawrencium: Jupyter Notebook on a GPU node
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu/" title="TensorFlow 1.12" class="md-nav__link">
+      TensorFlow 1.12
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu_tensorflow_2.0/" title="TensorFlow 2.0" class="md-nav__link">
+      TensorFlow 2.0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyter_gpu_tensorflow_2.1/" title="TensorFlow 2.1" class="md-nav__link">
+      TensorFlow 2.1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../jupyterhub_gpu/" title="JupyterHub" class="md-nav__link">
+      JupyterHub
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-amazon-sagemaker-notebook" class="md-nav__link">
+    Create an Amazon SageMaker Notebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-jupyterlab" class="md-nav__link">
+    Open JupyterLab
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-test" class="md-nav__link">
+    Local Test:
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Test:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-sample-code" class="md-nav__link">
+    Clone the sample code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-and-hosting-the-text-classifier-locally-on-the-jupyterlab-notebook-instance" class="md-nav__link">
+    Training and hosting the text classifier locally (on the JupyterLab notebook instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction" class="md-nav__link">
+    Prediction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-exploration" class="md-nav__link">
+    Data Exploration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training-and-hosting-your-algorithm-in-amazon-sagemaker" class="md-nav__link">
+    Training and Hosting your Algorithm in Amazon SageMaker
+  </a>
+  
+    <nav class="md-nav" aria-label="Training and Hosting your Algorithm in Amazon SageMaker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-and-registering-the-container" class="md-nav__link">
+    Building and registering the container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-the-environment" class="md-nav__link">
+    Set up the environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-session" class="md-nav__link">
+    Create the session
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-data-for-training" class="md-nav__link">
+    Upload the data for training
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-estimator-and-fit-the-model" class="md-nav__link">
+    Create an estimator and fit the model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-model" class="md-nav__link">
+    Deploy the model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction_1" class="md-nav__link">
+    Prediction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-test" class="md-nav__link">
+    Endpoint Test
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invokeendpoint-using-boto3" class="md-nav__link">
+    InvokeEndpoint using boto3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invokeendpoint-using-aws-cli" class="md-nav__link">
+    InvokeEndpoint using AWS CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-cleanup" class="md-nav__link">
+    Optional cleanup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/lbnl-science-it/docs-source/blob/master/docs/sagemaker_keras_text_classification.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                  <h1>AWS SageMaker: Text Classification Using Keras & TensorFlow</h1>
+                
+                <h2 id="overview">Overview</h2>
+<p>In this tutorial, we will use <strong>Amazon SageMaker</strong> to build, train and deploy an NLP model using custom built TensorFlow Docker containers. The NLP model will classify news articles into the appropriate news category. To train the model, we will be using the UCI News Dataset which contains a list of about 420K articles and their appropriate categories (labels). There are four categories:</p>
+<ul>
+<li>Business (b)</li>
+<li>Science &amp; Technology (t)</li>
+<li>Entertainment (e)</li>
+<li>Health &amp; Medicine (m)</li>
+</ul>
+<h2 id="prerequisites">Prerequisites:</h2>
+<ol>
+<li>
+<h4 id="create-an-amazon-sagemaker-notebook"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/howitworks-create-ws.html">Create an Amazon SageMaker Notebook</a></h4>
+</li>
+<li>
+<h4 id="open-jupyterlab"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/howitworks-access-ws.html">Open JupyterLab</a></h4>
+</li>
+</ol>
+<h2 id="local-test">Local Test:</h2>
+<h3 id="clone-the-sample-code">Clone the sample code</h3>
+<ul>
+<li>In <strong>JupyterLab</strong>, click the <strong>Terminal</strong> icon to open a new terminal</li>
+<li>To clone the <a href="https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification"><strong>tutorial repository</strong></a>, run the following commands</li>
+</ul>
+<pre><code class="shell">  git https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification.git
+  cd aws-sagemaker-keras-text-classification
+</code></pre>
+
+<h3 id="training-and-hosting-the-text-classifier-locally-on-the-jupyterlab-notebook-instance">Training and hosting the text classifier locally (on the JupyterLab notebook instance)</h3>
+<pre><code class="shell">  cd container
+  sh build_docker_local_test.sh
+</code></pre>
+
+<h3 id="prediction">Prediction</h3>
+<ul>
+<li>Open another terminal in <strong>JupyterLab</strong></li>
+</ul>
+<pre><code class="shell">  cd container/local_test
+  ./predict.sh input.json application/json
+</code></pre>
+
+<h2 id="data-exploration">Data Exploration</h2>
+<ul>
+<li>Navigate to  <code>aws-sagemaker-keras-text-classification</code> and open <code>sagemaker_keras_text_classification.ipynb</code></li>
+<li>Execute code in <strong>JupyterLab</strong> notebook</li>
+</ul>
+<pre><code class="python">import pandas as pd
+import tensorflow as tf
+import re
+import numpy as np
+import os
+
+from tensorflow.python.keras.preprocessing.text import Tokenizer
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.utils import to_categorical
+</code></pre>
+
+<pre><code>WARNING:tensorflow:From /home/ec2-user/anaconda3/envs/tensorflow_p36/lib/python3.6/site-packages/tensorflow_core/__init__.py:1467: The name tf.estimator.inputs is deprecated. Please use tf.compat.v1.estimator.inputs instead.
+</code></pre>
+<pre><code class="python">column_names = [&quot;TITLE&quot;, &quot;URL&quot;, &quot;PUBLISHER&quot;, &quot;CATEGORY&quot;, &quot;STORY&quot;, &quot;HOSTNAME&quot;, &quot;TIMESTAMP&quot;]
+news_dataset = pd.read_csv(os.path.join('./data', 'newsCorpora.csv'), names=column_names, header=None, delimiter='\t')
+news_dataset.head()
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>TITLE</th>
+<th>URL</th>
+<th>PUBLISHER</th>
+<th>CATEGORY</th>
+<th>STORY</th>
+<th>HOSTNAME</th>
+<th>TIMESTAMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fed official says weak data caused by weather,...</td>
+<td>http://www.latimes.com/business/money/la-fi-mo...</td>
+<td>Los Angeles Times</td>
+<td>b</td>
+<td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
+<td>www.latimes.com</td>
+<td>1394470370698</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="python">news_dataset.groupby(['CATEGORY']).size()
+</code></pre>
+
+<pre><code>CATEGORY
+b    115967
+e    152469
+m     45639
+t    108344
+dtype: int64
+</code></pre>
+<h2 id="training-and-hosting-your-algorithm-in-amazon-sagemaker"><a href="https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification/blob/master/sagemaker_keras_text_classification.ipynb">Training and Hosting your Algorithm in Amazon SageMaker</a></h2>
+<p><img alt="image" src="https://miro.medium.com/max/792/1*41reGFhdysmXNVHgmPMExA.png" /></p>
+<h3 id="building-and-registering-the-container">Building and registering the container</h3>
+<p>The following shell code shows how to build the container image using <code>docker build</code> and push the container image to ECR using <code>docker push</code>. </p>
+<p>This code looks for an ECR repository in the account you're using and the current default region (if you're using a SageMaker notebook instance, this will be the region where the notebook instance was created). If the repository doesn't exist, the script will create it.</p>
+<pre><code class="sh">%%sh
+cd container
+sh build_docker.sh
+</code></pre>
+
+<pre><code>Login Succeeded
+Stopping docker: [  OK  ]
+Starting docker:    .[  OK  ]
+Sending build context to Docker daemon  456.3MB
+Step 1/9 : FROM 763104351884.dkr.ecr.us-west-2.amazonaws.com/tensorflow-training:1.14.0-cpu-py36-ubuntu16.04
+ ---&gt; e6a210ff54e4
+Step 2/9 : RUN apt-get update &amp;&amp;     apt-get install -y nginx imagemagick graphviz
+ ---&gt; Using cache
+ ---&gt; 39d868b5172a
+Step 3/9 : RUN pip install --upgrade pip
+ ---&gt; Using cache
+ ---&gt; 83610cd980fc
+Step 4/9 : RUN pip install gevent gunicorn flask tensorflow_hub seqeval graphviz nltk spacy tqdm
+ ---&gt; Using cache
+ ---&gt; 090ab4fa935c
+Step 5/9 : RUN python -m spacy download en_core_web_sm
+ ---&gt; Using cache
+ ---&gt; cf5c0166e852
+Step 6/9 : RUN python -m spacy download en
+ ---&gt; Using cache
+ ---&gt; d39488c451a6
+Step 7/9 : ENV PATH="/opt/program:${PATH}"
+ ---&gt; Using cache
+ ---&gt; 1b3759031fe0
+Step 8/9 : COPY sagemaker_keras_text_classification /opt/program
+ ---&gt; Using cache
+ ---&gt; 092b378f8446
+Step 9/9 : WORKDIR /opt/program
+ ---&gt; Using cache
+ ---&gt; b468053ed126
+Successfully built b468053ed126
+Successfully tagged sagemaker-keras-text-classification:latest
+The push refers to repository [485444084140.dkr.ecr.us-west-2.amazonaws.com/sagemaker-keras-text-classification]
+6738a352b9b5: Preparing
+1084a39dd41b: Preparing
+394cd2fefa75: Preparing
+a8288ebab0e0: Preparing
+a71b5abf35ed: Preparing
+0ba58b74173a: Preparing
+cc978a7bbd2a: Preparing
+3a97a8d562fb: Preparing
+cb460459ddc8: Preparing
+b4064660a4cf: Preparing
+b6e9883adafa: Preparing
+9ee6d909e5a7: Preparing
+e722e212cbab: Preparing
+708ade65e147: Preparing
+11fc4467b8a3: Preparing
+0cf88c3675cd: Preparing
+d456742927ee: Preparing
+8722c9641a57: Preparing
+7083756ef61f: Preparing
+9d2fda619715: Preparing
+e79142719515: Preparing
+aeda103e78c9: Preparing
+2558e637fbff: Preparing
+f749b9b0fb21: Preparing
+e722e212cbab: Waiting
+708ade65e147: Waiting
+11fc4467b8a3: Waiting
+0cf88c3675cd: Waiting
+d456742927ee: Waiting
+8722c9641a57: Waiting
+7083756ef61f: Waiting
+9d2fda619715: Waiting
+e79142719515: Waiting
+aeda103e78c9: Waiting
+2558e637fbff: Waiting
+f749b9b0fb21: Waiting
+0ba58b74173a: Waiting
+cb460459ddc8: Waiting
+cc978a7bbd2a: Waiting
+3a97a8d562fb: Waiting
+9ee6d909e5a7: Waiting
+b6e9883adafa: Waiting
+1084a39dd41b: Pushed
+6738a352b9b5: Pushed
+cc978a7bbd2a: Layer already exists
+3a97a8d562fb: Layer already exists
+cb460459ddc8: Layer already exists
+394cd2fefa75: Pushed
+b4064660a4cf: Layer already exists
+b6e9883adafa: Layer already exists
+9ee6d909e5a7: Layer already exists
+a71b5abf35ed: Pushed
+e722e212cbab: Layer already exists
+708ade65e147: Layer already exists
+0cf88c3675cd: Layer already exists
+11fc4467b8a3: Layer already exists
+d456742927ee: Layer already exists
+7083756ef61f: Layer already exists
+8722c9641a57: Layer already exists
+9d2fda619715: Layer already exists
+e79142719515: Layer already exists
+2558e637fbff: Layer already exists
+aeda103e78c9: Layer already exists
+f749b9b0fb21: Layer already exists
+a8288ebab0e0: Pushed
+0ba58b74173a: Pushed
+latest: digest: sha256:c684d06918d8e4c9ca2db9c35a663d044c89816a01df6fc34ddfd09b449c65ab size: 5344
+
+
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+</code></pre>
+<p>Once you have your container packaged, you can use it to train and serve models. Let's do that with the algorithm we made above.</p>
+<h3 id="set-up-the-environment">Set up the environment</h3>
+<p>Here we specify a bucket to use and the role that will be used for working with SageMaker.</p>
+<pre><code class="python">### S3 prefix
+prefix = 'sagemaker-keras-text-classification'
+
+### Define IAM role
+import boto3
+import re
+
+import os
+import numpy as np
+import pandas as pd
+from sagemaker import get_execution_role
+
+role = get_execution_role()
+</code></pre>
+
+<h3 id="create-the-session">Create the session</h3>
+<p>The session remembers our connection parameters to SageMaker. We'll use it to perform all of our SageMaker operations.</p>
+<pre><code class="python">import sagemaker as sage
+from time import gmtime, strftime
+
+sess = sage.Session()
+</code></pre>
+
+<h3 id="upload-the-data-for-training">Upload the data for training</h3>
+<p>When training large models with huge amounts of data, you'll typically use big data tools, like Amazon Athena, AWS Glue, or Amazon EMR, to create your data in S3.  </p>
+<p>We can use use the tools provided by the SageMaker Python SDK to upload the data to a default bucket. </p>
+<pre><code class="python">WORK_DIRECTORY = 'data'
+
+data_location = sess.upload_data(WORK_DIRECTORY, key_prefix=prefix)
+</code></pre>
+
+<h3 id="create-an-estimator-and-fit-the-model">Create an estimator and fit the model</h3>
+<p>In order to use SageMaker to fit our algorithm, we'll create an <code>Estimator</code> that defines how to use the container to to train. This includes the configuration we need to invoke SageMaker training:</p>
+<ul>
+<li>The <strong>container name</strong>. This is constucted as in the shell commands above.</li>
+<li>The <strong>role</strong>. As defined above.</li>
+<li>The <strong>instance count</strong> which is the number of machines to use for training.</li>
+<li>The <strong>instance type</strong> which is the type of machine to use for training.</li>
+<li>The <strong>output path</strong> determines where the model artifact will be written.</li>
+<li>The <strong>session</strong> is the SageMaker session object that we defined above.</li>
+</ul>
+<p>Then we use fit() on the estimator to train against the data that we uploaded above.</p>
+<pre><code class="python">account = sess.boto_session.client('sts').get_caller_identity()['Account']
+region = sess.boto_session.region_name
+image = '{}.dkr.ecr.{}.amazonaws.com/sagemaker-keras-text-classification'.format(account, region)
+
+tree = sage.estimator.Estimator(image,
+                       role, 1, 'ml.c5.2xlarge',
+                       output_path=&quot;s3://{}/output&quot;.format(sess.default_bucket()),
+                       sagemaker_session=sess)
+</code></pre>
+
+<p>To view the progress of training: navigate to <strong>Amazon SageMaker Studio</strong> &gt; <strong>Training</strong> &gt; <strong>Training Jobs</strong> </p>
+<pre><code class="python">tree.fit(data_location)
+</code></pre>
+
+<pre><code>2020-04-22 01:18:26 Starting - Starting the training job...
+2020-04-22 01:18:27 Starting - Launching requested ML instances......
+2020-04-22 01:19:56 Starting - Preparing the instances for training......
+2020-04-22 01:20:56 Downloading - Downloading input data
+2020-04-22 01:20:56 Training - Downloading the training image......
+2020-04-22 01:21:50 Training - Training image download completed. Training in progress.[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])[0m
+[34m/usr/local/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])[0m
+[34mStarting the training.[0m
+[34m                                               TITLE  ...      TIMESTAMP[0m
+[34m1  Fed official says weak data caused by weather,...  ...  1394470370698[0m
+[34m2  Fed's Charles Plosser sees high bar for change...  ...  1394470371207[0m
+[34m3  US open: Stocks fall after Fed official hints ...  ...  1394470371550[0m
+[34m4  Fed risks falling 'behind the curve', Charles ...  ...  1394470371793[0m
+[34m5  Fed's Plosser: Nasty Weather Has Curbed Job Gr...  ...  1394470372027
+[0m
+[34m[5 rows x 7 columns][0m
+[34mFound 65990 unique tokens.[0m
+[34mShape of data tensor: (422417, 100)[0m
+[34mShape of label tensor: (422417, 4)[0m
+[34mx_train shape:  (337933, 100)[0m
+[34mWARNING: Logging before flag parsing goes to stderr.[0m
+[34mW0422 01:22:22.159757 140619530934016 deprecation.py:506] From /usr/local/lib/python3.6/site-packages/tensorflow/python/keras/initializers.py:119: calling RandomUniform.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.[0m
+[34mInstructions for updating:[0m
+[34mCall initializer instance with the dtype argument instead of passing it to the constructor[0m
+[34mW0422 01:22:22.187488 140619530934016 deprecation.py:506] From /usr/local/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:1251: calling VarianceScaling.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.[0m
+[34mInstructions for updating:[0m
+[34mCall initializer instance with the dtype argument instead of passing it to the constructor[0m
+[34mModel: "sequential"[0m
+[34m_________________________________________________________________[0m
+[34mLayer (type)                 Output Shape              Param #   [0m
+[34m=================================================================[0m
+[34membedding (Embedding)        (None, 100, 100)          1000000   [0m
+[34m_________________________________________________________________[0m
+[34mflatten (Flatten)            (None, 10000)             0         [0m
+[34m_________________________________________________________________[0m
+[34mdense (Dense)                (None, 2)                 20002     [0m
+[34m_________________________________________________________________[0m
+[34mdense_1 (Dense)              (None, 4)                 12        [0m
+[34m=================================================================[0m
+[34mTotal params: 1,020,014[0m
+[34mTrainable params: 1,020,014[0m
+[34mNon-trainable params: 0[0m
+[34m_________________________________________________________________[0m
+[34m2020-04-22 01:22:22.217855: I tensorflow/core/platform/cpu_feature_guard.cc:145] This TensorFlow binary is optimized with Intel(R) MKL-DNN to use the following CPU instructions in performance critical operations:  AVX512F[0m
+[34mTo enable them in non-MKL-DNN operations, rebuild TensorFlow with the appropriate compiler flags.[0m
+[34m2020-04-22 01:22:22.259738: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3000000000 Hz[0m
+[34m2020-04-22 01:22:22.260199: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x23b2eb0 executing computations on platform Host. Devices:[0m
+[34m2020-04-22 01:22:22.260224: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): &lt;undefined&gt;, &lt;undefined&gt;[0m
+[34m2020-04-22 01:22:22.261048: I tensorflow/core/common_runtime/process_util.cc:115] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.[0m
+[34m2020-04-22 01:22:22.291480: W tensorflow/compiler/jit/mark_for_compilation_pass.cc:1412] (One-time warning): Not using XLA:CPU for cluster because envvar TF_XLA_FLAGS=--tf_xla_cpu_global_jit was not set.  If you want XLA:CPU, either set that envvar, or use experimental_jit_scope to enable XLA:CPU.  To confirm that XLA is active, pass --vmodule=xla_compilation_cache=1 (as a proper command-line flag, not via TF_XLA_FLAGS) or set the envvar XLA_FLAGS=--xla_hlo_profile.[0m
+[34mTrain on 337933 samples, validate on 84484 samples[0m
+[34mEpoch 1/6[0m
+[34m337933/337933 - 29s - loss: 0.6303 - acc: 0.7653 - val_loss: 0.5580 - val_acc: 0.7959[0m
+[34mEpoch 2/6[0m
+[34m337933/337933 - 29s - loss: 0.5502 - acc: 0.7977 - val_loss: 0.5558 - val_acc: 0.7955[0m
+[34mEpoch 3/6[0m
+[34m337933/337933 - 29s - loss: 0.5427 - acc: 0.8000 - val_loss: 0.5450 - val_acc: 0.8004[0m
+[34mEpoch 4/6[0m
+[34m337933/337933 - 29s - loss: 0.5391 - acc: 0.8010 - val_loss: 0.5407 - val_acc: 0.8018[0m
+[34mEpoch 5/6[0m
+[34m337933/337933 - 29s - loss: 0.5363 - acc: 0.8022 - val_loss: 0.5403 - val_acc: 0.8035[0m
+[34mEpoch 6/6[0m
+
+2020-04-22 01:25:23 Uploading - Uploading generated training model
+2020-04-22 01:25:23 Completed - Training job completed
+[34m337933/337933 - 29s - loss: 0.5342 - acc: 0.8032 - val_loss: 0.5424 - val_acc: 0.8014[0m
+[34mTraining complete. Now saving model to:  /opt/ml/model[0m
+[34mW0422 01:25:15.442514 140619530934016 deprecation.py:506] From /usr/local/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:97: calling GlorotUniform.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.[0m
+[34mInstructions for updating:[0m
+[34mCall initializer instance with the dtype argument instead of passing it to the constructor[0m
+[34mW0422 01:25:15.442924 140619530934016 deprecation.py:506] From /usr/local/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:97: calling Zeros.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.[0m
+[34mInstructions for updating:[0m
+[34mCall initializer instance with the dtype argument instead of passing it to the constructor[0m
+[34mTest headline:  What Improved Tech Means for Electric, Self-Driving and Flying Cars[0m
+[34mPredicted category:  b[0m
+Training seconds: 283
+Billable seconds: 283
+</code></pre>
+<h3 id="deploy-the-model">Deploy the model</h3>
+<p>Deploying the model to SageMaker hosting just requires a <code>deploy</code> call on the fitted model. This call takes an instance count, instance type, and optionally serializer and deserializer functions. These are used when the resulting predictor is created on the endpoint.</p>
+<p><strong>This step may take about 10-20 min</strong></p>
+<pre><code class="python">from sagemaker.predictor import json_serializer
+predictor = tree.deploy(1, 'ml.m4.xlarge', serializer=json_serializer)
+</code></pre>
+
+<pre><code>-------------!
+</code></pre>
+<h3 id="prediction_1">Prediction</h3>
+<pre><code class="python">request = { &quot;input&quot;: &quot;‘Deadpool 2’ Has More Swearing, Slicing and Dicing from Ryan Reynolds&quot;}
+print(predictor.predict(request).decode('utf-8'))
+</code></pre>
+
+<pre><code>{"result": "Entertainment"}
+</code></pre>
+<h2 id="endpoint-test"><a href="https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification/blob/master/sagemaker_keras_text_classification.ipynb">Endpoint Test</a></h2>
+<p>To view the <code>endpoint_name</code> you just deployed: navigate to <strong>Amazon SageMaker Studio</strong> &gt; <strong>Inference</strong> &gt; <strong>Endpoints</strong> </p>
+<h3 id="invokeendpoint-using-boto3">InvokeEndpoint using boto3</h3>
+<pre><code class="python">import json
+import boto3
+
+client = boto3.client('runtime.sagemaker')
+endpoint_name = 'sagemaker-keras-text-classification-2020-04-22-01-18-26-512'
+
+payload = { &quot;input&quot;: &quot;‘Deadpool 2’ Has More Swearing, Slicing and Dicing from Ryan Reynolds&quot;}
+
+response = client.invoke_endpoint(EndpointName=endpoint_name,
+                                  ContentType='application/json',
+                                  Accept='text/plain',
+                                  Body=json.dumps(payload))
+
+response_body = response['Body']
+prediction = response_body.read().decode('utf-8')
+print(prediction)
+</code></pre>
+
+<pre><code>{"result": "Entertainment"}
+</code></pre>
+<h3 id="invokeendpoint-using-aws-cli">InvokeEndpoint using AWS CLI</h3>
+<pre><code class="sh">%%sh 
+ENDPOINT_NAME=&quot;sagemaker-keras-text-classification-2020-04-22-01-18-26-512&quot;
+CONTENT_TYPE='application/json'
+
+aws sagemaker-runtime invoke-endpoint \
+--endpoint-name ${ENDPOINT_NAME} \
+--content-type ${CONTENT_TYPE} \
+--body '{&quot;input&quot;: &quot;Why Exercise Alone May Not Be the Key to Weight Loss&quot;}' prediction_response.json
+
+cat prediction_response.json
+</code></pre>
+
+<pre><code>{
+    "ContentType": "application/json",
+    "InvokedProductionVariant": "AllTraffic"
+}
+{"result": "Health &amp; Medicine"}
+</code></pre>
+<h3 id="optional-cleanup">Optional cleanup</h3>
+<p>When you're done with the endpoint, you'll want to clean it up.</p>
+<pre><code class="python">sess.delete_endpoint(predictor.endpoint)
+</code></pre>
+
+<h2 id="references">References</h2>
+<ul>
+<li>https://github.com/aws-samples/amazon-sagemaker-keras-text-classification</li>
+<li>https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification</li>
+<li>https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks.html</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../singularity_docker/" title="Lawrencium: Singularity container using AWS DL docker images" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Lawrencium: Singularity container using AWS DL docker images
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../rl_mountain_car_coach_gymEnv/" title="AWS SageMaker: Reinforcement Learning" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                AWS SageMaker: Reinforcement Learning
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; LBNL 2020 Science IT Consultants
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.a14cc5fd.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.7a2ea5ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

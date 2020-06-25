@@ -21,7 +21,7 @@
     
     
       
-        <title>Build Singularity container using AWS DL docker images - LBNL Science IT Docs</title>
+        <title>Lawrencium: Singularity container using AWS DL docker images - LBNL Science IT Docs</title>
       
     
     
@@ -82,7 +82,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Build Singularity container using AWS DL docker images
+              Lawrencium: Singularity container using AWS DL docker images
             
           </span>
         </div>
@@ -347,14 +347,14 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Build Singularity container using AWS DL docker images
+        Lawrencium: Singularity container using AWS DL docker images
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
         </span>
       </label>
     
-    <a href="./" title="Build Singularity container using AWS DL docker images" class="md-nav__link md-nav__link--active">
-      Build Singularity container using AWS DL docker images
+    <a href="./" title="Lawrencium: Singularity container using AWS DL docker images" class="md-nav__link md-nav__link--active">
+      Lawrencium: Singularity container using AWS DL docker images
     </a>
     
       
@@ -378,8 +378,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#outline" class="md-nav__link">
-    Outline
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-cli-version-1" class="md-nav__link">
+    AWS CLI version 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singularity" class="md-nav__link">
+    Singularity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objectives" class="md-nav__link">
+    Objectives
   </a>
   
 </li>
@@ -444,6 +485,40 @@
     Train text classifier on Lawrencium
   </a>
   
+    <nav class="md-nav" aria-label="Train text classifier on Lawrencium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-singularity-containers-and-training-data" class="md-nav__link">
+    Upload the Singularity containers and training data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-singularity-container-on-lawrencium-cpu-node" class="md-nav__link">
+    Run the Singularity container on Lawrencium CPU node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-singularity-container-on-lawrencium-gpu-node" class="md-nav__link">
+    Run the Singularity container on Lawrencium GPU node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    CPU vs GPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -465,22 +540,46 @@
           
 
 
+  <li class="md-nav__item">
+    <a href="../sagemaker_keras_text_classification/" title="AWS SageMaker: Text Classification Using Keras & TensorFlow" class="md-nav__link">
+      AWS SageMaker: Text Classification Using Keras & TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rl_mountain_car_coach_gymEnv/" title="AWS SageMaker: Reinforcement Learning" class="md-nav__link">
+      AWS SageMaker: Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9-5" type="checkbox" id="nav-9-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9-7" type="checkbox" id="nav-9-7">
     
-    <label class="md-nav__link" for="nav-9-5">
-      Start Jupyter Notebook on a GPU node on Lawrencium
+    <label class="md-nav__link" for="nav-9-7">
+      Lawrencium: Jupyter Notebook on a GPU node
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
       </span>
     </label>
-    <nav class="md-nav" aria-label="Start Jupyter Notebook on a GPU node on Lawrencium" data-md-level="2">
-      <label class="md-nav__title" for="nav-9-5">
+    <nav class="md-nav" aria-label="Lawrencium: Jupyter Notebook on a GPU node" data-md-level="2">
+      <label class="md-nav__title" for="nav-9-7">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
         </span>
-        Start Jupyter Notebook on a GPU node on Lawrencium
+        Lawrencium: Jupyter Notebook on a GPU node
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -574,8 +673,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#outline" class="md-nav__link">
-    Outline
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-cli-version-1" class="md-nav__link">
+    AWS CLI version 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#singularity" class="md-nav__link">
+    Singularity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objectives" class="md-nav__link">
+    Objectives
   </a>
   
 </li>
@@ -640,6 +780,40 @@
     Train text classifier on Lawrencium
   </a>
   
+    <nav class="md-nav" aria-label="Train text classifier on Lawrencium">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-the-singularity-containers-and-training-data" class="md-nav__link">
+    Upload the Singularity containers and training data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-singularity-container-on-lawrencium-cpu-node" class="md-nav__link">
+    Run the Singularity container on Lawrencium CPU node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-singularity-container-on-lawrencium-gpu-node" class="md-nav__link">
+    Run the Singularity container on Lawrencium GPU node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    CPU vs GPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -669,10 +843,30 @@
                   
                 
                 
-                  <h1>Build Singularity container using AWS DL docker images</h1>
+                  <h1>Lawrencium: Singularity container using AWS DL docker images</h1>
                 
                 <h2 id="text-classification-using-aws-deep-learning-docker-containers"><a href="https://github.com/lbnl-science-it/singularity_aws_dl_container/blob/master/singularity_docker.ipynb">Text Classification Using AWS Deep Learning Docker Containers</a></h2>
-<h2 id="outline">Outline</h2>
+<h2 id="overview">Overview</h2>
+<p>In this tutorial, we will build a Singularity container using one of available <a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS Deep-Learning docker images</a>, and run the Singularity container on Lawrencium CPU and GPU nodes, to train an NLP model (based on Keras &amp; TensorFlow). The NLP model will classify news articles into the appropriate news category given the training data from UCI News Dataset which contains a list of about 420K articles and their appropriate categories (labels). There are four categories:</p>
+<ul>
+<li>Business (b)</li>
+<li>Science &amp; Technology (t)</li>
+<li>Entertainment (e)</li>
+<li>Health &amp; Medicine (m)</li>
+</ul>
+<h2 id="prerequisites">Prerequisites:</h2>
+<ol>
+<li>
+<h4 id="aws-cli-version-1"><a href="https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html">AWS CLI version 1</a></h4>
+</li>
+<li>
+<h4 id="docker"><a href="https://docs.docker.com/engine/install">Docker</a></h4>
+</li>
+<li>
+<h4 id="singularity"><a href="https://sylabs.io/guides/3.5/user-guide">Singularity</a></h4>
+</li>
+</ol>
+<h2 id="objectives">Objectives</h2>
 <p>1) Build the Singularity container using available AWS Deep-Learning docker containers</p>
 <p>2) Local Test</p>
 <p>3) Train text classifier on Lawrencium:</p>
@@ -680,6 +874,7 @@
 <li>Upload the Singularity containers and training data</li>
 <li>Run the Singularity container on <strong>CPU</strong> nodes</li>
 <li>Run the Singularity container on <strong>GPU</strong> nodes</li>
+<li>CPU vs GPU</li>
 </ul>
 <h2 id="build-the-singularity-container-using-available-aws-deep-learning-docker-containers">Build the Singularity container using available AWS Deep-Learning docker containers</h2>
 <ul>
@@ -862,88 +1057,30 @@ news_dataset = pd.read_csv(os.path.join('./data', 'newsCorpora.csv'), names=colu
 news_dataset.head()
 </code></pre>
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>TITLE</th>
-      <th>URL</th>
-      <th>PUBLISHER</th>
-      <th>CATEGORY</th>
-      <th>STORY</th>
-      <th>HOSTNAME</th>
-      <th>TIMESTAMP</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Fed official says weak data caused by weather,...</td>
-      <td>http://www.latimes.com/business/money/la-fi-mo...</td>
-      <td>Los Angeles Times</td>
-      <td>b</td>
-      <td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
-      <td>www.latimes.com</td>
-      <td>1394470370698</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Fed's Charles Plosser sees high bar for change...</td>
-      <td>http://www.livemint.com/Politics/H2EvwJSK2VE6O...</td>
-      <td>Livemint</td>
-      <td>b</td>
-      <td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
-      <td>www.livemint.com</td>
-      <td>1394470371207</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>US open: Stocks fall after Fed official hints ...</td>
-      <td>http://www.ifamagazine.com/news/us-open-stocks...</td>
-      <td>IFA Magazine</td>
-      <td>b</td>
-      <td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
-      <td>www.ifamagazine.com</td>
-      <td>1394470371550</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Fed risks falling 'behind the curve', Charles ...</td>
-      <td>http://www.ifamagazine.com/news/fed-risks-fall...</td>
-      <td>IFA Magazine</td>
-      <td>b</td>
-      <td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
-      <td>www.ifamagazine.com</td>
-      <td>1394470371793</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Fed's Plosser: Nasty Weather Has Curbed Job Gr...</td>
-      <td>http://www.moneynews.com/Economy/federal-reser...</td>
-      <td>Moneynews</td>
-      <td>b</td>
-      <td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
-      <td>www.moneynews.com</td>
-      <td>1394470372027</td>
-    </tr>
-  </tbody>
+<table>
+<thead>
+<tr>
+<th>TITLE</th>
+<th>URL</th>
+<th>PUBLISHER</th>
+<th>CATEGORY</th>
+<th>STORY</th>
+<th>HOSTNAME</th>
+<th>TIMESTAMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fed official says weak data caused by weather,...</td>
+<td>http://www.latimes.com/business/money/la-fi-mo...</td>
+<td>Los Angeles Times</td>
+<td>b</td>
+<td>ddUyU0VZz0BRneMioxUPQVP6sIxvM</td>
+<td>www.latimes.com</td>
+<td>1394470370698</td>
+</tr>
+</tbody>
 </table>
-</div>
-
 <pre><code class="python">news_dataset.groupby(['CATEGORY']).size()
 </code></pre>
 
@@ -970,7 +1107,9 @@ dtype: int64
 
 <h2 id="train-text-classifier-on-lawrencium">Train text classifier on Lawrencium</h2>
 <ul>
-<li>Upload the Singularity containers and training data</li>
+<li>
+<h3 id="upload-the-singularity-containers-and-training-data">Upload the Singularity containers and training data</h3>
+</li>
 </ul>
 <pre><code class="shell">    sftp lrc-xfer.lbl.gov
     put local_sagemaker-keras-text-classification.sif
@@ -979,7 +1118,9 @@ dtype: int64
 </code></pre>
 
 <ul>
-<li>Run the Singularity container on Lawrencium <strong>CPU</strong> node</li>
+<li>
+<h3 id="run-the-singularity-container-on-lawrencium-cpu-node">Run the Singularity container on Lawrencium <strong>CPU</strong> node</h3>
+</li>
 </ul>
 <pre><code class="shell">    ssh lrc-login.lbl.gov
     cd local_test
@@ -988,7 +1129,9 @@ dtype: int64
 </code></pre>
 
 <ul>
-<li>Run the Singularity container on Lawrencium <strong>GPU</strong> node</li>
+<li>
+<h3 id="run-the-singularity-container-on-lawrencium-gpu-node">Run the Singularity container on Lawrencium <strong>GPU</strong> node</h3>
+</li>
 </ul>
 <pre><code class="shell">    ssh lrc-login.lbl.gov
     cd local_test
@@ -1084,12 +1227,19 @@ Predicted category:  t
 
 </code></pre>
 
+<ul>
+<li>
+<h3 id="cpu-vs-gpu">CPU vs GPU</h3>
+In this tutorial we trained the same NLP model on Lawrencium nodes with and without GPU; the training took about <strong>17s</strong> per epoch (337933 samples) on GPU node, and <strong>23s</strong> per epoch on CPU node.</li>
+</ul>
 <h2 id="references">References</h2>
 <ol>
 <li>https://aws.amazon.com/releasenotes/available-deep-learning-containers-images</li>
 <li>https://github.com/aws-samples/amazon-sagemaker-keras-text-classification</li>
 <li>https://github.com/lbnl-science-it/aws-sagemaker-keras-text-classification</li>
 <li>https://sylabs.io/guides/3.5/user-guide/</li>
+<li>https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket</li>
+<li>https://docs.aws.amazon.com/cli/latest/userguide/install-linux.html</li>
 </ol>
                 
               
@@ -1124,13 +1274,13 @@ Predicted category:  t
           </a>
         
         
-          <a href="../jupyter_gpu/" title="TensorFlow 1.12" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../sagemaker_keras_text_classification/" title="AWS SageMaker: Text Classification Using Keras & TensorFlow" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                TensorFlow 1.12
+                AWS SageMaker: Text Classification Using Keras & TensorFlow
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
