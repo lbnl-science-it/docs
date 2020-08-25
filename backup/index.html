@@ -303,6 +303,47 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#data-storage-location-options" class="md-nav__link">
+    Data storage location options:
+  </a>
+  
+    <nav class="md-nav" aria-label="Data storage location options:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uc-berkeley-commvault" class="md-nav__link">
+    UC Berkeley Commvault
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-drive" class="md-nav__link">
+    Google Drive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amazon-s3-or-google-cloud" class="md-nav__link">
+    Amazon S3 or Google Cloud
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spss" class="md-nav__link">
+    SPSS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#open-source-backup-solutions" class="md-nav__link">
     Open source backup solutions:
   </a>
@@ -334,7 +375,7 @@
         
           <li class="md-nav__item">
   <a href="#documentation" class="md-nav__link">
-    Documentation:
+    Documentation
   </a>
   
 </li>
@@ -394,13 +435,6 @@
           <li class="md-nav__item">
   <a href="#msp360" class="md-nav__link">
     MSP360
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#veeam" class="md-nav__link">
-    Veeam
   </a>
   
 </li>
@@ -659,6 +693,47 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#data-storage-location-options" class="md-nav__link">
+    Data storage location options:
+  </a>
+  
+    <nav class="md-nav" aria-label="Data storage location options:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uc-berkeley-commvault" class="md-nav__link">
+    UC Berkeley Commvault
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-drive" class="md-nav__link">
+    Google Drive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amazon-s3-or-google-cloud" class="md-nav__link">
+    Amazon S3 or Google Cloud
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spss" class="md-nav__link">
+    SPSS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#open-source-backup-solutions" class="md-nav__link">
     Open source backup solutions:
   </a>
@@ -690,7 +765,7 @@
         
           <li class="md-nav__item">
   <a href="#documentation" class="md-nav__link">
-    Documentation:
+    Documentation
   </a>
   
 </li>
@@ -754,13 +829,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#veeam" class="md-nav__link">
-    Veeam
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -796,68 +864,123 @@
                   <h1>Backup Resources</h1>
                 
                 <h2 id="overview">Overview:</h2>
+<p>There are a number of options available for backing up your data. </p>
+<p>For a lab IT supported option, you can use the Commvault service offered by UC Berkeley <a href="link_me_here">link_to commvault_info</a>.</p>
+<p>If you would rather setup and manage your own backup processes, there are other options available.  You'll need to setup and configure a backup client on your system to manage the transfer of the files, and you'll need a data server setup to store the backup copies of your files.</p>
+<p>Science IT is available to help you select your best backup option.  Email <a href="mailto:scienceit@lbl.gov">scienceit@lbl.gov</a> to schedule a consultation.</p>
+<p>Backup Solutions</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>Open Source</th>
-<th>Windows</th>
-<th>macOS</th>
-<th>Linux</th>
-<th>Amazon S3</th>
-<th>Google Drive</th>
-<th>Google Cloud</th>
+<th><strong>Tool</strong></th>
+<th><strong>Commvault</strong></th>
+<th><strong>Rclone</strong></th>
+<th><strong>Duplicati</strong></th>
+<th><strong>MSP360</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Rclone</strong></td>
+<td></td>
+<td>UC Managed</td>
+<td>Open Source</td>
+<td>Open Source</td>
+<td>Commercial</td>
+</tr>
+<tr>
+<td>Lab IT Supported</td>
 <td>Y</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td><strong>Runs on:</strong></td>
 <td>Y</td>
-<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Windows</td>
 <td>Y</td>
 <td>Y</td>
 <td>Y</td>
 <td>Y</td>
 </tr>
 <tr>
-<td><strong>Duplicati</strong></td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<td>MacOS</td>
 <td>Y</td>
 <td>Y</td>
 <td>Y</td>
 <td>Y</td>
 </tr>
 <tr>
-<td><strong>MSP360</strong></td>
-<td>N</td>
+<td>Linux</td>
 <td>Y</td>
 <td>Y</td>
 <td>Y</td>
-<td>Y</td>
-<td>N</td>
 <td>Y</td>
 </tr>
 <tr>
-<td><strong>Veeam</strong></td>
-<td>N</td>
+<td><strong>Stores data to:</strong></td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UC Berkeley</td>
 <td>Y</td>
 <td>N</td>
 <td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>Google Drive</td>
+<td>N</td>
+<td>Y</td>
 <td>Y</td>
 <td>N</td>
+</tr>
+<tr>
+<td>Amazon S3</td>
+<td>N</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Google Cloud</td>
+<td>N</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="https://commons.lbl.gov/pages/viewpage.action?pageId=184100826">SPSS</a></td>
+<td>N</td>
+<td>Y</td>
+<td>Y</td>
 <td>N</td>
 </tr>
 </tbody>
 </table>
+<h2 id="data-storage-location-options">Data storage location options:</h2>
+<h3 id="uc-berkeley-commvault">UC Berkeley Commvault</h3>
+<p>Monthly costs for data is $0.28/GB/month and can be charged to your project ID via recharge.  There are no extra charges for restoring data, and restores are available 24x7 via a self-serve web interface.</p>
+<h3 id="google-drive">Google Drive</h3>
+<p>All LBL users have free and unlimited data storage available to them in Google Drive.  For a simple backup process, this might be your best option.  </p>
+<h3 id="amazon-s3-or-google-cloud">Amazon S3 or Google Cloud</h3>
+<p>Generally speaking, Amazon S3 or Google Cloud storage will cost about $0.023/GB/month for data storage.  Additionally, there can be egress charges depending on your need to restore data back to your system.  Science IT can get you setup on the LBL master payer program for either/both services.</p>
+<h3 id="spss"><a href="https://commons.lbl.gov/pages/viewpage.action?pageId=184100826">SPSS</a></h3>
+<p>SPSS is a highly available and scalable storage service offered by the IT division as part of the Science IT initiative.  SPSS affords lab researchers a file storage platform to support data workflows without the cost of dedicated hardware or the administration burden of running their own IT infrastructure.  SPSS will cost about $0.013/GB/month.</p>
 <h2 id="open-source-backup-solutions">Open source backup solutions:</h2>
 <h3 id="rclone">Rclone</h3>
 <p>Rclone is a command line program to manage files on cloud storage and sync files and directories to and from: Google Drive, Amazon S3, Dropbox, Backblaze B2, OneDrive, Swift, Hubic, Cloudfiles, Amazon Drive, Google Cloud Storage, Yandex Files, the local filesystem and more. Rclone is widely used on Linux, Windows and Mac. Third party developers create innovative backup, restore, GUI and business process solutions using the rclone command line or API.</p>
 <h4 id="install"><a href="https://rclone.org/downloads/">Install</a></h4>
 <h4 id="configuration"><a href="https://rclone.org/docs/#configure">Configuration</a></h4>
-<h4 id="documentation">Documentation:</h4>
+<h4 id="documentation">Documentation</h4>
 <ul>
 <li><em>Amazon S3</em>: <a href="https://rclone.org/s3/">https://rclone.org/s3/</a></li>
 <li><em>Google Drive</em>: <a href="https://rclone.org/drive/">https://rclone.org/drive/</a></li>
@@ -884,17 +1007,11 @@
 <li><em>Amazon S3</em>: <a href="https://www.msp360.com/backup/amazon-s3.aspx">https://www.msp360.com/backup/amazon-s3.aspx</a></li>
 <li><em>Google Cloud Storage</em>: <a href="https://www.msp360.com/backup/google-cloud.aspx">https://www.msp360.com/backup/google-cloud.aspx</a></li>
 </ul>
-<h3 id="veeam">Veeam</h3>
-<p>Veeam® Backup &amp; Replication™ delivers Availability for all your cloud, virtual and physical workloads. Through a simple-by-design management console, you can easily achieve fast, flexible and reliable backup, recovery and replication for all your applications and data. https://www.veeam.com/vm-backup-recovery-replication-software.html</p>
-<ul>
-<li><em>Amazon S3</em>: <a href="https://helpcenter.veeam.com/docs/backup/hyperv/adding_amazon_object_storage.html?ver=100">https://helpcenter.veeam.com/docs/backup/hyperv/adding_amazon_object_storage.html?ver=100</a></li>
-</ul>
 <h2 id="references">References:</h2>
 <ul>
 <li><a href="https://rclone.org/commands/">https://rclone.org/commands/</a></li>
 <li><a href="https://duplicati.readthedocs.io/en/latest/">https://duplicati.readthedocs.io/en/latest/</a></li>
 <li><a href="https://www.msp360.com/backup.aspx">https://www.msp360.com/backup.aspx</a></li>
-<li><a href="https://helpcenter.veeam.com/docs/backup/vsphere/system_requirements.html?ver=100">https://helpcenter.veeam.com/docs/backup/vsphere/system_requirements.html?ver=100</a></li>
 </ul>
                 
               
